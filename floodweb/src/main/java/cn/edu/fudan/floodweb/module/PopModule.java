@@ -1,12 +1,6 @@
 package cn.edu.fudan.floodweb.module;
 
 import cn.edu.fudan.floodweb.bean.*;
-import cn.edu.fudan.floodweb.utils.DateTimeUtil;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.*;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.FieldFilter;
@@ -14,17 +8,8 @@ import org.nutz.dao.util.Daos;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.util.NutMap;
-import org.nutz.mvc.Scope;
 import org.nutz.mvc.annotation.*;
-import org.nutz.mvc.upload.TempFile;
-import org.nutz.mvc.upload.UploadAdaptor;
-import org.nutz.trans.Atom;
-import org.nutz.trans.Trans;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,12 +21,12 @@ import java.util.List;
 @At("/ent")
 @Ok("json")
 @Fail("http:500")
-public class EntModule {
+public class PopModule {
     @Inject
     protected Dao dao;
 
     /**
-     * 查询企业
+     * 查询人口
      * @return
      */
     @At
@@ -50,13 +35,13 @@ public class EntModule {
         if (region != null && !region.equals("")) {
             cnd = cnd.and("county", "=", region);
         }
-        FieldFilter ff = FieldFilter.create(Ent.class, "^creditCode|name|address|lon|lat$");
-        List<Ent> entList = Daos.ext(dao, ff).query(Ent.class, cnd);
-        return entList;
+        FieldFilter ff = FieldFilter.create(Pop.class, "^creditCode|name|address|lon|lat$");
+        List<Pop> popList = Daos.ext(dao, ff).query(Pop.class, cnd);
+        return popList;
     }
 
     /**
-     * 查询企业
+     * 查询人口
      * @param region
      * @return
      */
@@ -76,8 +61,8 @@ public class EntModule {
         if (street != null && !street.equals("")) {
             cnd = cnd.and("street", "like", "%" + street + "%");
         }
-        List<Ent> entList = dao.query(Ent.class, cnd);
-        return entList;
+        List<Pop> popList = dao.query(Pop.class, cnd);
+        return popList;
     }
     /**
      * 查询企业
@@ -92,8 +77,8 @@ public class EntModule {
 //        }
 //        FieldFilter ff = FieldFilter.create(Ent.class, "^creditCode|name|lon|lat$");
         if (id != null && !id.equals("")) {
-            Ent ent = dao.fetch(Ent.class, id);
-            return ent;
+            Pop pop = dao.fetch(Pop.class, id);
+            return pop;
         } else {
             return null;
         }
@@ -105,39 +90,39 @@ public class EntModule {
 
 
     @At
-    public void updateEnt(@Param("id")String id, @Param("name")String name, @Param("address")String address,
+    public void updatePop(@Param("id")String id, @Param("name")String name, @Param("address")String address,
                           @Param("industrylevel1")String industryLevel1, @Param("industryLevel2")String industryLevel2,
                           @Param("inenv")boolean inEnv, @Param("legalrepre")String legalRepre, @Param("procedure")String procedure,
                           @Param("medical")boolean medical, @Param("papermaking")boolean papermaking, @Param("synleather")boolean synLeather,
                           @Param("managetype")String manageType, @Param("industrylevel1code")String industryLevel1Code,
                           @Param("industrylevel2code")String industryLevel2Code, @Param("street")String street) {
-        Ent ent = new Ent();
-        ent.setCreditCode(id);
-        ent.setName(name);
-        ent.setStreet(street);
-        ent.setAddress(address);
-        ent.setIndustryLevel1Code(industryLevel1Code);
-        ent.setIndustryLevel2Code(industryLevel2Code);
-        ent.setIndustryLevel1(industryLevel1);
-        ent.setIndustryLevel2(industryLevel2);
-        ent.setInEnv(inEnv);
-        ent.setLegalRepre(legalRepre);
-        ent.setProcedure(procedure);
-        ent.setMedical(medical);
-        ent.setPapermaking(papermaking);
-        ent.setSynLeather(synLeather);
-        ent.setManageType(manageType);
+        Pop pop = new Pop();
+        pop.setCreditCode(id);
+        pop.setName(name);
+        pop.setStreet(street);
+        pop.setAddress(address);
+        pop.setIndustryLevel1Code(industryLevel1Code);
+        pop.setIndustryLevel2Code(industryLevel2Code);
+        pop.setIndustryLevel1(industryLevel1);
+        pop.setIndustryLevel2(industryLevel2);
+        pop.setInEnv(inEnv);
+        pop.setLegalRepre(legalRepre);
+        pop.setProcedure(procedure);
+        pop.setMedical(medical);
+        pop.setPapermaking(papermaking);
+        pop.setSynLeather(synLeather);
+        pop.setManageType(manageType);
 
-        dao.update(ent, "^(name|street|address|industryLevel1Code|industryLevel2Code|industryLevel1|industryLevel2|inEnv|legalRepre|procedure|medical|papermaking|synLeather|manageType)$");
+        dao.update(pop, "^(name|street|address|industryLevel1Code|industryLevel2Code|industryLevel1|industryLevel2|inEnv|legalRepre|procedure|medical|papermaking|synLeather|manageType)$");
     }
 
 
 
     @At
-    public Object deleteEnt(@Param("id")final String id) {
+    public Object deletePop(@Param("id")final String id) {
         NutMap re = new NutMap();
         try {
-            dao.delete(Ent.class, id);
+            dao.delete(Pop.class, id);
             return re.setv("ok", true);
         } catch (Exception e) {
             return re.setv("ok", false).setv("msg", e.getMessage());
@@ -147,7 +132,7 @@ public class EntModule {
 
 
     @At
-    public Object insertEnt(@Param("entid")final String entId, @Param("name")String name, @Param("province")String province,
+    public Object insertPop(@Param("entid")final String entId, @Param("name")String name, @Param("province")String province,
                             @Param("city")String city, @Param("county")String county, @Param("street")String street,
                             @Param("adcode")String adCode, @Param("address")String address,
                             @Param("industrylevel1code")String industryLevel1Code, @Param("industrylevel2code")String industryLevel2Code,
@@ -163,28 +148,28 @@ public class EntModule {
                             @Param("managetype")String manageType) {
         NutMap re = new NutMap();
         try {
-            final Ent ent = new Ent();
-            ent.setCreditCode(entId);
-            ent.setName(name);
-            ent.setProvince(province);
-            ent.setCity(city);
-            ent.setCounty(county);
-            ent.setStreet(street);
-            ent.setAdCode(adCode);
-            ent.setAddress(address);
-            ent.setIndustryLevel1Code(industryLevel1Code);
-            ent.setIndustryLevel2Code(industryLevel2Code);
-            ent.setIndustryLevel1(industryLevel1);
-            ent.setIndustryLevel2(industryLevel2);
-            ent.setInEnv(inEnv);
-            ent.setLegalRepre(legalRepre);
-            ent.setLon(lon);
-            ent.setLat(lat);
-            ent.setProcedure(procedure);
-            ent.setMedical(medical);
-            ent.setPapermaking(papermaking);
-            ent.setSynLeather(synLeather);
-            ent.setManageType(manageType);
+            final Pop pop = new Pop();
+            pop.setCreditCode(entId);
+            pop.setName(name);
+            pop.setProvince(province);
+            pop.setCity(city);
+            pop.setCounty(county);
+            pop.setStreet(street);
+            pop.setAdCode(adCode);
+            pop.setAddress(address);
+            pop.setIndustryLevel1Code(industryLevel1Code);
+            pop.setIndustryLevel2Code(industryLevel2Code);
+            pop.setIndustryLevel1(industryLevel1);
+            pop.setIndustryLevel2(industryLevel2);
+            pop.setInEnv(inEnv);
+            pop.setLegalRepre(legalRepre);
+            pop.setLon(lon);
+            pop.setLat(lat);
+            pop.setProcedure(procedure);
+            pop.setMedical(medical);
+            pop.setPapermaking(papermaking);
+            pop.setSynLeather(synLeather);
+            pop.setManageType(manageType);
 
 
             return re.setv("ok", true);

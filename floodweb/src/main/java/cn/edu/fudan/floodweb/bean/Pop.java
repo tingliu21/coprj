@@ -9,8 +9,8 @@ import org.nutz.dao.entity.annotation.Table;
  * @author maofeng
  *
  */
-@Table("t_ent")
-public class Ent {
+@Table("t_pop")
+public class Pop {
     @Name
     @Column("ent_credit_code")
     private String creditCode;
