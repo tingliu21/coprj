@@ -43,6 +43,20 @@ body,html,.parent{
     margin-top: 10px;
     font-weight: bold;
 }
+#div-current_region {
+    float: right;
+    color: #fff;
+    margin-top: 30px;
+    margin-right: 50px;
+}
+#current_region {
+    color: #91cbe8;
+
+}
+#current_region:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 #welcome {
     float: right;
     color: #ffffff;
@@ -144,24 +158,6 @@ body,html,.parent{
 .item-encyclopedia:hover {
     filter: brightness(1);
 }
-#ie-yiweichouqi {
-    background: url("../img/yiweichouqi.jpg");
-}
-#ie-kongqizhiliang {
-    background: url("../img/kongqizhiliang.jpg");
-}
-#ie-eryanghualiu {
-    background: url("../img/eryanghualiu.jpg");
-}
-#ie-qingyanghuawu {
-    background: url("../img/qingyanghuawu.jpg");
-}
-#ie-tanyanghuawu {
-    background: url("../img/tanyanghuawu.jpg");
-}
-#ie-wuran {
-    background: url("../img/wuran.png");
-}
 .item-encyclopedia p {
     position: absolute; /*or前面的是absolute就可以用*/
     bottom: 0;
@@ -181,7 +177,8 @@ body,html,.parent{
 #gdInfoModal .modal-body div,
 #stpInfoModal .modal-body div,
 #spsInfoModal .modal-body div,
-#wtsInfoModal .modal-body div{
+#wtsInfoModal .modal-body div,
+#riskInfoModal .modal-body div{
     margin: 2px 0px;
 }
 #entInfoModal .modal-body .row,
@@ -202,4 +199,31 @@ body,html,.parent{
     background-color: #ffffff;
     border: 1px solid #333333;
     display: none;
+}
+
+.timeline {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 800px;
+}
+.timeline .control-button {
+    position: absolute;
+    left: -50px;
+    top:30px;
+}
+
+#btn-risk-search {
+    margin-top: 10px;
+}
+
+#riskInfoModal .modal-dialog .modal-content .modal-body {
+    padding: 20px 50px;
+}
+#risk-chart {
+    /*border: 1px solid red ;*/
+    width:500px;
+    height: 300px;
 }

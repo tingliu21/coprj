@@ -3,6 +3,7 @@ var REGION_CODE_NAME = {"331000": "", "331002": "椒江区", "331003": "黄岩�
 var REGION_CODE_ACRONYM = {"331000": "", "331002": "jj", "331003": "hy", "331004": "lq", "331082": "lh", "331081": "wl",
     "331021": "yh", "331023": "tt", "331024": "xj", "331022": "sm"}
 
+var authority = "";
 /**
  * 根据区县获取地图初始化参数
  * @returns {{center: number[], minZoom: number, zoom: number}}
@@ -77,7 +78,7 @@ function getBoundaryLayer() {
  * 根据区县获取土壤分布图层
  * @returns {*}
  */
-function getEnvFuncZoneLayer() {
+function getSoilLayer() {
     var layer;
     if (authority == "331000") {
         layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EnvFuncZone/MapServer"});
@@ -86,15 +87,20 @@ function getEnvFuncZoneLayer() {
     }
     return layer;
 }
+
+/**
+ * DEM
+ * @returns {*}
+ */
 function getDEMLayer(){
     var wmsLayer = L.tileLayer.wms('http://111.231.120.210:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
     return wmsLayer;
 }
 /**
- * 根据区县获取饮用水源地图层
+ * 根据区县获取河湖水系图层
  * @returns {*}
  */
-function getDrinkingWaterSourceLayer() {
+function getWaterLayer() {
     var layer;
     if (authority == "331000") {
         layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/DrinkingWaterSource/MapServer"});
@@ -108,7 +114,7 @@ function getDrinkingWaterSourceLayer() {
  * 根据区县获取内涝分布图层
  * @returns {*}
  */
-function getEcoRedLineLayer() {
+function getFloodLayer() {
     var layer;
     if (authority == "331000") {
         layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EcoRedline/MapServer"});
@@ -122,7 +128,7 @@ function getEcoRedLineLayer() {
  * 根据区县获取土地利用图层
  * @returns {*}
  */
-function getSxydLayer() {
+function getLanduseLayer() {
     var layer;
     if (authority == "331000") {
         layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/SXYD/MapServer"});

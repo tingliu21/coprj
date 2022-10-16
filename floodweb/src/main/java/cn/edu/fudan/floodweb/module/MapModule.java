@@ -2,6 +2,9 @@ package cn.edu.fudan.floodweb.module;
 
 import cn.edu.fudan.floodweb.utils.OkHttpUtil;
 import cn.edu.fudan.floodweb.bean.User;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -19,7 +22,7 @@ public class MapModule {
     protected Dao dao;
 
     @At
-    @Ok("re:jsp:/index.jsp")
+    @Ok("re:jsp:/index.html")
     @Filters(@By(type= CheckSession.class, args={"me", "/signin.html"}))
     public String index(@Attr(scope= Scope.SESSION, value="me")String username) {
         User user = dao.fetch(User.class, username);
@@ -96,6 +99,47 @@ public class MapModule {
         String response = OkHttpUtil.httpGet(url.toString());
         if (!response.equals("") && response != null) {
             return re.setv("ok", true).setv("data", response);
+        } else {
+            return re.setv("ok", false).setv("msg", "查询服务失效！");
+        }
+    }
+    @At
+    public Object queryInfo(@Param("lon")double lon, @Param("lat")double lat) {
+        NutMap re = new NutMap();
+        String strLayer = "inunriver_rcp8p5_0000GFDL-ESM2M_2030_rp00100";
+        double offset = 0.00001;
+        double minx = lon - offset;
+        double miny = lat - offset;
+        double maxx = lon + offset;
+        double maxy = lat + offset;
+
+        String strurl = "http://106.53.130.212:8088/geoserver/sde/wms";
+        StringBuilder url = new StringBuilder();
+
+        url.append(strurl)
+                .append("?SERVICE=WMS")
+                .append("&VERSION=2.0.0")
+                .append("&REQUEST=GetFeatureInfo")
+                .append("&FORMAT=image").append("%2F").append("png") //+ encodeURIComponent("image/png")
+                .append("&TRANSPARENT=true")
+                .append("&QUERY_LAYERS=sde").append("%3A").append(strLayer) //+ encodeURIComponent("sde:inunriver_rcp8p5_0000GFDL-ESM2M_2030_rp00100")
+                .append("&LAYERS=sde").append("%3A").append(strLayer) //+ encodeURIComponent("sde:inunriver_rcp8p5_0000GFDL-ESM2M_2030_rp00100")
+                .append("&exceptions=application").append("%2F").append("vnd.ogc.se_inimage") //+ encodeURIComponent("application/vnd.ogc.se_inimage")
+                .append("&INFO_FORMAT=application").append("%2F").append("json") //+ encodeURIComponent("application/json")
+                .append("&FEATURE_COUNT=50")
+                .append("&X=50")
+                .append("&Y=50")
+                .append("&SRS=EPSG%3A4326")
+                .append("&STYLES=")
+                .append("&WIDTH=101")
+                .append("&HEIGHT=101")
+                .append("&BBOX=").append(minx).append("%2C").append(miny).append("%2C").append(maxx).append("%2C").append(maxy); //+ encodeURIComponent(minx + "," + miny + "," + maxx + "," + maxy);
+
+        String response = OkHttpUtil.httpGet(url.toString());
+        if (!response.equals("") && response != null) {
+            JSONObject jsonRes = JSON.parseObject(response);
+            JSONObject jsonFeature = jsonRes.getJSONArray("features").getJSONObject(0);
+            return re.setv("ok", true).setv("data",jsonFeature.getJSONObject("properties").getDoubleValue("GRAY_INDEX") );
         } else {
             return re.setv("ok", false).setv("msg", "查询服务失效！");
         }

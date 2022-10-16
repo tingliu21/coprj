@@ -9,9 +9,9 @@ var ioc = {
             depose : 'close'
         },
         fields : {
-            driverClassName : "org.postgresql.Driver",
-            url : "jdbc:postgresql://localhost:5432/smellmap",
-            username : "postgres",
+            driverClassName : "com.mysql.cj.jdbc.Driver",
+            url : "jdbc:mysql://localhost:3306/flooddb",
+            username : "root",
             password : "123456",
             maxWait: 15000
         }
