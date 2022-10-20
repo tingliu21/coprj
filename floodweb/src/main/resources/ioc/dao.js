@@ -1,4 +1,10 @@
 var ioc = {
+    conf : {
+        type : "org.nutz.ioc.impl.PropertiesProxy",
+        fields : {
+            paths : ["custom/"]
+        }
+    },
     dao : {
         type : "org.nutz.dao.impl.NutDao",
         args : [{refer:"dataSource"}]
