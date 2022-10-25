@@ -3,6 +3,7 @@ package cn.edu.fudan.floodweb.job;
 import cn.edu.fudan.floodweb.bean.Precipitation;
 import cn.edu.fudan.floodweb.bean.StudyArea;
 import cn.edu.fudan.floodweb.bean.Weather;
+import cn.edu.fudan.floodweb.utils.GeoServerUtil;
 import cn.edu.fudan.floodweb.utils.OkHttpUtil;
 import cn.edu.fudan.floodweb.utils.ParseWeatherUtil;
 import org.joda.time.DateTime;
@@ -29,12 +30,13 @@ import java.util.List;
 public class FetchPrecipitationJob implements Job {
     @Inject
     protected Dao dao;
+    @Inject
+    protected GeoServerUtil geoServerUtil;
     public void execute(JobExecutionContext context) {
         System.out.println("开始执行降雨数据获取任务：" + Times.sDTms(new Date()));
         System.out.println("获取研究区的所有城市location列表：");
         //查询得到城市locationid
         List<Integer> locidList = getCityLocation();
-
         for(Integer locid:locidList) {
             System.out.println("获取城市"+locid+"的7日天气预报:" + Times.sDTms(new Date()));
             //根据locationid调用和风天气获取城市站点7d的降雨量预测值
@@ -42,6 +44,13 @@ public class FetchPrecipitationJob implements Job {
             for(Weather weather : weatherList){
                 System.out.println("更新城市"+locid+"对应格网"+weather.getFxDate()+"的降雨为:"+weather.getPrecip()+"毫米");
                 UpdateOrInsertPrecip(locid,weather);
+                //执行存储过程，生成对应的风险表
+                Sql sql = Sqls.create("call floodriskbyday(@day)").setParam("day",weather.getFxDate());
+                dao.execute(sql);
+                //动态发布geoserver图层
+                if(publishGeoserverLayer(DateTime.parse(weather.getFxDate()))){
+                    System.out.println(weather.getFxDate()+"洪涝风险图发布成功！");
+                }
             }
         }
     }
@@ -72,6 +81,7 @@ public class FetchPrecipitationJob implements Job {
      */
     private void UpdateOrInsertPrecip(Integer locid,Weather weather){
         double precip = Double.parseDouble(weather.getPrecip());
+        DateTime p_date  = DateTime.parse(weather.getFxDate());
         Cnd cnd = Cnd.where("locid", "=", locid);
         //得到城市id对应研究区中的格网信息
         List<StudyArea> studyAreas = dao.query(StudyArea.class,cnd);
@@ -91,9 +101,20 @@ public class FetchPrecipitationJob implements Job {
                 precipitation.setPrecip(precip);
                 precipitation.setLat(studyArea.getLat());
                 precipitation.setLon(studyArea.getLon());
-                precipitation.setTime(DateTime.parse(weather.getFxDate()).toDate());
+                precipitation.setTime(p_date.toDate());
                 dao.insert(precipitation);
             }
+        }
+    }
+    private boolean publishGeoserverLayer(DateTime riskdate){
+        //动态发布geoserver图层
+//        GeoServerUtil geoServerUtil = new GeoServerUtil();
+        String tableName ="inun_"+riskdate.toString("yyyyMMdd");
+        boolean bExists = geoServerUtil.checkLayerIsExist("sde",tableName);
+        if(!bExists){
+            return geoServerUtil.publishDBLayer("sde","flood",tableName,"sde:inundation");
+        }else {
+            return false;
         }
     }
 }

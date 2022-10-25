@@ -1,5 +1,5 @@
 var WEB_PATH = "/floodweb";
-var GEOSERVER_PATH="http://106.53.130.212:8088/geoserver/sde/wms";
+var GEOSERVER_PATH="http://localhost:8088/geoserver/sde/wms";
 var LAYER_TDT_NORMAL;
 var LAYER_TDT_NORMAL_ANNO;
 var LAYER_TDT_SATELLITE;
