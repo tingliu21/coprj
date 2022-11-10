@@ -411,7 +411,7 @@ $(document).ready(function () {
 		let lon = $('#risk-query-lon').text()
 		let lat = $('#risk-query-lat').text()
 		let date = $('#risk-query-date').val()
-		$.get("rainflood/queryLocinundation?qdate=" + date + "&num=3&clat=" + lat + "&clon=" + lon, function(data) {
+		$.get("rainflood/queryLocinundation?qdate=" + date + "&num=15&clat=" + lat + "&clon=" + lon, function(data) {
 			if (data.ok) {
 				generateRiskChart(data.data)
 			} else {
@@ -432,7 +432,9 @@ function changeDataTimeAxios(e) {
 	LAYER_RISK = L.tileLayer.wms(GEOSERVER_PATH, {
 					layers: "inun_"+formatDate2(d),
 					 format: 'image/png',
-					transparent: true
+					transparent: true,
+					KeepBuffer:10,
+					tileSize:2048
 				});
 	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
 		map.removeLayer(LAYER_RISK)
@@ -854,15 +856,35 @@ function generateRiskChart(data) {
 				bottom:'20',
 				left:'40'
 			},
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : {
+					type : 'cross',
+					crossStyle : {
+						color : '#999'
+					}
+				}
+			},
 			xAxis:{
 				type : 'category',
 				data:catalogs
 			},
 			yAxis: {
-				type: 'value'
+				type: 'value',
+				interval : 0.2,
+				min : 0,
+				max : function(value) {
+					return Math.ceil(value.max/0.2)*0.2;
+				},
 			},
 			series:[{
 				type:'line',
+				label : {
+					normal : {
+						position : 'top',
+						show : true
+					}
+				},
 				name:'风险值',
 				data:values
 			}]

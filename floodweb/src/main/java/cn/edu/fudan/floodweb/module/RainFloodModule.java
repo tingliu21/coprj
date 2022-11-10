@@ -18,6 +18,7 @@ import org.nutz.mvc.annotation.Param;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -111,6 +112,8 @@ public class RainFloodModule {
                 }
                 //通过java反射机制获取属性值
                 depth = (Double) ReflectUtil.getFieldValueByObject(river,fieldName);
+                BigDecimal bg = new BigDecimal(depth);
+                depth = bg.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();
             }
             //设置淹没深度
             dayDepth.setDepth(depth);
