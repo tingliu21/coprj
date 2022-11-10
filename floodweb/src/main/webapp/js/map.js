@@ -342,7 +342,7 @@ $(document).ready(function () {
 	var timeAxioParam = {  //时间轴控件参数
 		data: timeList,
 		id: 'cxTime',
-		width: '100px',
+		width: '80px',
 		index: 3
 	}
 	// 时间轴控件
@@ -449,13 +449,13 @@ function changeDataTimeAxios(e) {
 function setTimeList(midDate) {
 	let d = new Date();
 	return [
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()-3 * 24 * 60 * 60 * 1000)))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()-2 * 24 * 60 * 60 * 1000)))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()-1 * 24 * 60 * 60 * 1000)))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime())))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()+1 * 24 * 60 * 60 * 1000)))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()+2 * 24 * 60 * 60 * 1000)))},
-		{name: '', time: formatDate(new Date(d.setTime(midDate.getTime()+3 * 24 * 60 * 60 * 1000)))}
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()-3 * 24 * 60 * 60 * 1000)))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()-2 * 24 * 60 * 60 * 1000)))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()-1 * 24 * 60 * 60 * 1000)))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime())))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()+1 * 24 * 60 * 60 * 1000)))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()+2 * 24 * 60 * 60 * 1000)))},
+		{name: '', time: formatDate3(new Date(d.setTime(midDate.getTime()+3 * 24 * 60 * 60 * 1000)))}
 	]
 }
 /**
@@ -484,6 +484,18 @@ function formatDate2(date) {
 	let d = date.getDate();
 	d = d < 10 ? '0' + d : d;
 	return y + m + d;
+}
+/**
+ * 格式化日期
+ * @param date
+ * @returns {string} 格式化为yyyyMMdd
+ */
+function formatDate3(date) {
+	let m = date.getMonth() + 1;
+	m = m < 10 ? '0' + m : m;
+	let d = date.getDate();
+	d = d < 10 ? '0' + d : d;
+	return m + "-" + d;
 }
 
 /**

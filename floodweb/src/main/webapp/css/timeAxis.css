@@ -9,11 +9,12 @@
     margin: 0px;
 }
 .cx-time-main{
-    width: 100%;
+    width: calc(100% - 60px);
     height: 80px;
     margin-left: auto;
     margin-right: auto;
     color: #fff;
+    float: right;
 }
 .cx-time-main > span{
     width: 20px;
@@ -37,17 +38,17 @@
 }
 .cx-round-box{
     position: relative;
-    width: 12px;
+    /*width: 12px;*/
     height: 100%;
 }
 .cx-time-round{
     position: relative;
-    width: 12px;
+    width: 2px;
     height: 12px;
     top: 50%;
     margin-top: -6px;
     background: #fff;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
     cursor: pointer;
 }
 .cx-time-top{
@@ -63,7 +64,7 @@
 .cx-time-bottom{
     position: absolute;
     top: 50%;
-    left: -30px;
+    left: -20px;
     width: 120px;
     min-height: 20px;
     height: auto;
@@ -84,10 +85,10 @@
     background: #fff;
 }
 .cx-time-round:hover,.cx-time-active .cx-time-round{
-    width: 16px;
+    width: 2px;
     height: 16px;
     top: 49%;
-    left: -2px;
+    /*left: -2px;*/
     background: yellow;
 }
 .cx-time-active > div{
