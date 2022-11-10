@@ -336,6 +336,7 @@ $(document).ready(function () {
 	/**
 	 *  处理时间轴
 	 **/
+	$(".timeline").hide() // 时间轴默认隐藏
 	timeList = setTimeList(new Date()) //默认为当天日期及其前三天后三天
 
 	var timeAxioParam = {  //时间轴控件参数
@@ -347,7 +348,7 @@ $(document).ready(function () {
 	// 时间轴控件
 	// var oTimeAxiosFun = new oTimeAxios(timeAxioParam, function () {  });
 	var oTimeAxiosFun;
-	$('#btnPlay').hide();
+	// $('#btnPlay').hide();
 
 	// 处理自动播放时间轴
 	var isPlay = false; //标识是否正在播放
@@ -381,16 +382,19 @@ $(document).ready(function () {
 	// 查询灾害风险图
 	$('#btn-risk-search').click(function () {
 		if ($('#risk-date').val() != "") {
+			$(".timeline").show()
+
 			let d = new Date($('#risk-date').val()); //用户填写的日期
 			timeList = setTimeList(d) //得到连续7天的日期
 			timeAxioParam.data = timeList //设置时间轴
 			oTimeAxiosFun = new oTimeAxios(timeAxioParam, function () { changeDataTimeAxios(this) });
-			$('#btnPlay').show();
+			// $('#btnPlay').show();
 		}
 
 	})
 	//重置查询灾害风险图
 	$('#btn-risk-reset').click(function () {
+		$(".timeline").hide()
 		$('#risk-date').val("")
 		if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
 			map.removeLayer(LAYER_RISK)
