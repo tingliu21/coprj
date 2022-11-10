@@ -43,7 +43,7 @@ function getMapParams() {
             center = [29, 121.53];
             break;
     }
-    return {center: center, zoom: zoom, minZoom: minZoom};
+    return {center: center, zoom: zoom };
 }
 
 /**

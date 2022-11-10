@@ -6,7 +6,6 @@ $(document).ready(function () {
         attributionControl: false,
         center: mapParams.center,
         zoom: mapParams.zoom,
-		minZoom: mapParams.minZoom,
 		//maxBounds: L.latLngBounds(L.latLng(27,119), L.latLng(30, 123)),
         doubleClickZoom: false,
         zoomControl: false,
@@ -44,7 +43,7 @@ $(document).ready(function () {
     // map.on("moveend", function() {map.getContainer().style.cursor = "default";});
 
     /* 图例控件 */
-    // map.addControl(htmlLegend1);
+    map.addControl(htmlLegend1);
     // map.addControl(htmlLegend2);
     // map.addControl(htmlLegend3);
     // map.addControl(htmlLegendSxyd);
@@ -60,10 +59,17 @@ $(document).ready(function () {
 			case 'image-map':
 				map.addLayer(baseLayers.satellite);
 				map.removeLayer(baseLayers.normal);
+				map.removeLayer(baseLayers.terrain);
 				break;
 			case 'vector-map':
 				map.addLayer(baseLayers.normal);
 				map.removeLayer(baseLayers.satellite);
+				map.removeLayer(baseLayers.terrain);
+				break;
+			case 'terrain-map':
+				map.addLayer(baseLayers.terrain);
+				map.removeLayer(baseLayers.satellite);
+				map.removeLayer(baseLayers.normal);
 				break;
 		}
 	});

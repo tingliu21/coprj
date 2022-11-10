@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/leaflet.css">
     <link href="css/all.css" rel="stylesheet">
-<!--    <link rel="stylesheet" href="css/L.Control.HtmlLegend.css" />--> <!--图例插件-->
+    <link rel="stylesheet" href="css/L.Control.HtmlLegend.css" /> <!--图例插件-->
 
 <!--    <link rel="stylesheet" href="css/leaflet.contextmenu.min.css" /> &lt;%&ndash;右键菜单插件&ndash;%&gt;-->
     <link rel="stylesheet" href="css/leaflet-measure.css" /> <!--测量插件-->
@@ -27,7 +27,7 @@
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet.ChineseTmsProviders.js"></script>
     <script src="js/esri-leaflet.js"></script>
-<!--    <script src="js/L.Control.HtmlLegend.js"></script>--> <!--图例插件-->
+    <script src="js/L.Control.HtmlLegend.js"></script> <!--图例插件-->
     <script src="js/leaflet-sidebar.min.js"></script> <!--边栏插件-->
 <!--    <script src="js/leaflet.contextmenu.min.js"></script> &lt;%&ndash;右键菜单插件&ndash;%&gt;-->
     <script src="js/Leaflet.Control.Custom.js"></script> <!--自定义Control插件-->
@@ -84,7 +84,7 @@
             <!-- top aligned tabs -->
             <ul role="tablist">
                 <li><a href="#home" role="tab"><i class="fas fa-bars"></i></a></li>
-                <li><a href="#poi" role="tab"><i class="fas fa-map-marker-alt"></i></a></li>
+<!--                <li><a href="#poi" role="tab"><i class="fas fa-map-marker-alt"></i></a></li>-->
                 <li><a href="#chart" role="tab"><i class="fas fa-chart-bar"></i></a></li>
 <!--                <li><a href="#search" role="tab"><i class="fas fa-search-location"></i></a></li>-->
                 <li><a href="#fuzzy-search" role="tab"><i class="fas fa-search"></i></a></li>
@@ -100,6 +100,7 @@
                     <p class="sidebar-header2">基础底图</p>
                     <input type="radio" name="basemap" id="image-map" checked><label for="image-map">影像地图</label>
                     <input type="radio" name="basemap" id="vector-map"><label for="vector-map">矢量地图</label>
+                    <input type="radio" name="basemap" id="terrain-map"><label for="terrain-map">地形图</label>
                 </div>
                 <div>
                     <p class="sidebar-header2">业务图层</p>
@@ -108,24 +109,25 @@
                     <div><input type="checkbox" id="soil" class="operation-overlay"><label>土壤数据</label></div>
                     <div><input type="checkbox" id="water" class="operation-overlay"><label>河湖水系分布</label></div>
                     <div><input type="checkbox" id="flood" class="operation-overlay"><label>内涝分布</label></div>
+                    <div><input type="checkbox" id="pop" class="operation-overlay"><label>人口密度</label></div>
                 </div>
             </div>
-            <div class="leaflet-sidebar-pane" id="poi">
-                <h1 class="leaflet-sidebar-header">
-                    人口分布
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-                <div>
-                    <p class="sidebar-header2">网格人口</p>
-                    <input type="checkbox" id="cb-pop">
-                    <label>聚合图</label>
-                </div>
-                <div>
-                    <p class="sidebar-header2">人口密度</p>
-                    <input type="checkbox" name="heatmap-radio" id="heatmap-location" value="pop" extra="5">
-                    <label>人口核密度</label>
-                </div>
-            </div>
+<!--            <div class="leaflet-sidebar-pane" id="poi">-->
+<!--                <h1 class="leaflet-sidebar-header">-->
+<!--                    人口分布-->
+<!--                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>-->
+<!--                </h1>-->
+<!--                <div>-->
+<!--                    <p class="sidebar-header2">网格人口</p>-->
+<!--                    <input type="checkbox" id="cb-pop">-->
+<!--                    <label>聚合图</label>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p class="sidebar-header2">人口密度</p>-->
+<!--                    <input type="checkbox" name="heatmap-radio" id="heatmap-location" value="pop" extra="5">-->
+<!--                    <label>人口核密度</label>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="leaflet-sidebar-pane" id="chart">
                 <h1 class="leaflet-sidebar-header">
                     灾害风险

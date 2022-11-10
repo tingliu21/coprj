@@ -4,6 +4,8 @@ var LAYER_TDT_NORMAL;
 var LAYER_TDT_NORMAL_ANNO;
 var LAYER_TDT_SATELLITE;
 var LAYER_TDT_SATELLITE_ANNO;
+var LAYER_TDT_TERRAIN;
+var LAYER_TDT_TERRAIN_ANNO;
 // var LAYER_TZBOUNDARY;
 var LAYER_SOIL; //土壤数据图层
 var LAYER_DEMTOPP; //DEM图层
@@ -21,6 +23,7 @@ var queryLocationMarker;
 var map;
 var satellite;  //影像底图
 var normal;     //矢量底图
+var terrain;    //地形底图
 var baseLayers; //底图
 // var overlays;
 var operationOverlays; //业务图层
@@ -91,10 +94,12 @@ var lineOption={
 };
 
 function initVar() {
-    LAYER_TDT_NORMAL = L.tileLayer.chinaProvider('TianDiTu.Normal.Map',{maxZoom:18,minZoom:5});
-    LAYER_TDT_NORMAL_ANNO = L.tileLayer.chinaProvider('TianDiTu.Normal.Annotion',{maxZoom:18,minZoom:5});
-    LAYER_TDT_SATELLITE = L.tileLayer.chinaProvider('TianDiTu.Satellite.Map',{maxZoom:18,minZoom:5});
-    LAYER_TDT_SATELLITE_ANNO = L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion',{maxZoom:18,minZoom:5});
+    LAYER_TDT_NORMAL = L.tileLayer.chinaProvider('TianDiTu.Normal.Map',{maxZoom:18,minZoom:3});
+    LAYER_TDT_NORMAL_ANNO = L.tileLayer.chinaProvider('TianDiTu.Normal.Annotion',{maxZoom:18,minZoom:3});
+    LAYER_TDT_SATELLITE = L.tileLayer.chinaProvider('TianDiTu.Satellite.Map',{maxZoom:18,minZoom:3});
+    LAYER_TDT_SATELLITE_ANNO = L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion',{maxZoom:18,minZoom:3});
+    LAYER_TDT_TERRAIN = L.tileLayer.chinaProvider('TianDiTu.Terrain.Map', {maxZoom:18,minZoom:3});
+    LAYER_TDT_TERRAIN_ANNO = L.tileLayer.chinaProvider('TianDiTu.Terrain.Annotion', {maxZoom:18,minZoom:3});
     // LAYER_TZBOUNDARY = getBoundaryLayer();
     LAYER_SOIL = getSoilLayer();
     LAYER_DEMTOPP=getDEMLayer();
@@ -121,10 +126,12 @@ function initVar() {
 
     satellite = L.layerGroup([LAYER_TDT_SATELLITE, LAYER_TDT_SATELLITE_ANNO]);
     normal = L.layerGroup([LAYER_TDT_NORMAL, LAYER_TDT_NORMAL_ANNO]);
+    terrain = L.layerGroup([LAYER_TDT_TERRAIN, LAYER_TDT_TERRAIN_ANNO]);
 
     baseLayers = {
         "satellite":satellite,
-        "normal": normal
+        "normal": normal,
+        "terrain": terrain
     };
 
     operationOverlays = {
@@ -151,68 +158,28 @@ function initVar() {
     // });
 
 
-    /* 土壤分布图例 */
-    // htmlLegend1 = L.control.htmllegend({
-    //     position: 'bottomright',
-    //     legends: [{
-    //         name: '土壤类型',
-    //         layer: LAYER_ENVFUNCZONE,
-    //         elements: [{
-    //             label: '红壤性土',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FF0000',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '水稻土',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#F7F8AD',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '岩石土',
-    //             html: '',
-    //             style: {
-    //                 'background': '#000 url(../img/legend1.png) no-repeat',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '粗骨石质土',
-    //             html: '',
-    //             style: {
-    //                 'background': '#000 url(../img/legend2.png) no-repeat',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '淹渗型水稻土',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#7FE499',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '黄红壤',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#F89E80',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }]
-    //     }],
-    //     collapseSimple: true,
-    //     detectStretched: true,
-    //     defaultOpacity: 0.6,
-    //     visibleIcon: 'icon icon-eye',
-    //     hiddenIcon: 'icon icon-eye-slash'
-    // });
+    /* 风险等级图例 */
+    htmlLegend1 = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '风险等级',
+            layer: LAYER_RISK,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_1.png) no-repeat',
+                    'width': '230px',
+                    'height': '30px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 0.6,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
 
     /* 河湖水系图例 */
     // htmlLegend2 = L.control.htmllegend({
