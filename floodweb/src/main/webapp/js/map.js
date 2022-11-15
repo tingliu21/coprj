@@ -43,13 +43,12 @@ $(document).ready(function () {
     // map.on("moveend", function() {map.getContainer().style.cursor = "default";});
 
     /* 图例控件 */
-    map.addControl(htmlLegend1);
-    map.addControl(htmlLegend2);
-    // map.addControl(htmlLegend3);
-    // map.addControl(htmlLegendSxyd);
-    // map.addControl(htmlLegendWater);
-    // map.addControl(htmlLegendEco);
-    // map.addControl(htmlLegendGeneral);
+    map.addControl(htmlLegend_risk);
+    map.addControl(htmlLegend_soil);
+    map.addControl(htmlLegend_landuse);
+	map.addControl(htmlLegend_water);
+	map.addControl(htmlLegend_flood);
+	map.addControl(htmlLegend_pop);
 
 	chartline = echarts.init(document.getElementById('risk-chart'));
 

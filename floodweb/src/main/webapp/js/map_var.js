@@ -12,6 +12,7 @@ var LAYER_DEMTOPP; //DEM图层
 var LAYER_WATER;   //河湖水系图层
 var LAYER_FLOOD;   //内涝图层
 var LAYER_LANDUSE; //土地利用
+var LAYER_POP; //人口密度
 
 var LAYER_RISK; //风险图层
 var chartline;
@@ -29,11 +30,15 @@ var baseLayers; //底图
 var operationOverlays; //业务图层
 var heatmapLayer; //热力图
 var measureControl;
-var htmlLegend1;
-var htmlLegend2;
-var htmlLegend3;
 
-var htmlLegendWater;
+//图例
+var htmlLegend_risk;
+var htmlLegend_soil;
+var htmlLegend_landuse;
+var htmlLegend_water;
+var htmlLegend_flood;
+var htmlLegend_pop;
+
 // var sidebar_bookmark;
 var sidebar;
 var normal_click;
@@ -106,6 +111,7 @@ function initVar() {
     LAYER_WATER = getWaterLayer();
     LAYER_FLOOD = getFloodLayer();
     LAYER_LANDUSE = getLanduseLayer();
+    LAYER_POP = getPopLayer();
 
     // highlightStyle = {
     //     "color": "#ffff00",
@@ -139,7 +145,8 @@ function initVar() {
         "soil": LAYER_SOIL,
         "water": LAYER_WATER,
         "flood": LAYER_FLOOD,
-        "dem":LAYER_DEMTOPP
+        "pop": LAYER_POP
+        // "dem":LAYER_DEMTOPP
     };
 
     // heatmapLayer = new HeatmapOverlay({
@@ -159,7 +166,7 @@ function initVar() {
 
 
     /* 风险等级图例 */
-    htmlLegend1 = L.control.htmllegend({
+    htmlLegend_risk = L.control.htmllegend({
         position: 'bottomright',
         legends: [{
             name: '风险等级',
@@ -181,11 +188,35 @@ function initVar() {
         hiddenIcon: 'icon icon-eye-slash'
     });
 
-    /* 土地利用图例 */
-    htmlLegend2 = L.control.htmllegend({
+    /* 土壤数据图例 */
+    htmlLegend_soil = L.control.htmllegend({
         position: 'bottomright',
         legends: [{
-            name: '土地利用',
+            name: '土壤数据',
+            layer: LAYER_SOIL,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background-size': '230px 80px',
+                    'width': '230px',
+                    'height': '80px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 1,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
+
+    /* 土地利用图例 */
+    htmlLegend_landuse = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '土地利用数据',
             layer: LAYER_LANDUSE,
             elements: [{
                 label: ' ',
@@ -205,148 +236,79 @@ function initVar() {
         hiddenIcon: 'icon icon-eye-slash'
     });
 
-    /* 内涝分布范围图例 */
-    // htmlLegend3 = L.control.htmllegend({
-    //     position: 'bottomright',
-    //     legends: [{
-    //         name: '内涝分布范围',
-    //         layer: LAYER_ECOREDLINE,
-    //         elements: [{
-    //             label: '内涝分布',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#F89E80',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }]
-    //     }],
-    //     collapseSimple: true,
-    //     detectStretched: true,
-    //     defaultOpacity: 0.6,
-    //     visibleIcon: 'icon icon-eye',
-    //     hiddenIcon: 'icon icon-eye-slash'
-    // });
+    /*  河湖水系分布图例 */
+    htmlLegend_water = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '河湖水系分布',
+            layer: LAYER_WATER,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background-size': '230px 80px',
+                    'width': '230px',
+                    'height': '80px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 1,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
 
-    /* 三线一单图例 */
-    // htmlLegendSxyd = L.control.htmllegend({
-    //     position: 'bottomright',
-    //     legends: [{
-    //         name: '土地利用类型',
-    //         layer: LAYER_SXYD,
-    //         elements: [{
-    //             label: '工业用地',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FF0000',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '居民区',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FF7F7F',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '水域',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#D0E4FD',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '草地',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FFFF00',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '林地',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#38A800',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }]
-    //     }],
-    //     collapseSimple: true,
-    //     detectStretched: true,
-    //     defaultOpacity: 0.6,
-    //     visibleIcon: 'icon icon-eye',
-    //     hiddenIcon: 'icon icon-eye-slash'
-    // });
+    /* 内涝分布图例 */
+    htmlLegend_flood = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '内涝分布',
+            layer: LAYER_FLOOD,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background-size': '230px 80px',
+                    'width': '230px',
+                    'height': '80px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 1,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
+
+    /* 人口密度图例 */
+    htmlLegend_pop = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '人口密度',
+            layer: LAYER_POP,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background-size': '230px 80px',
+                    'width': '230px',
+                    'height': '80px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 1,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
 
 
-
-    /* 图例 */
-    // htmlLegendWater = L.control.htmllegend({
-    //     position: 'bottomright',
-    //     legends: [{
-    //         name: '海拔',
-    //         layer: LAYER_DEMTOPP,
-    //         elements: [{
-    //             label: '>1000',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#EC1B24',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '800-1000',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FF7F7F',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '600-800',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#DE9E66',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '400-600',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#E69800',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '200-400',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FFFF00',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }, {
-    //             label: '<200',
-    //             html: '',
-    //             style: {
-    //                 'background-color': '#FFFFBE',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }]
-    //     }],
-    //     collapseSimple: true,
-    //     detectStretched: true,
-    //     defaultOpacity: 0.6,
-    //     visibleIcon: 'icon icon-eye',
-    //     hiddenIcon: 'icon icon-eye-slash'
-    // });
 
 
 

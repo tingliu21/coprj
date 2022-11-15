@@ -132,3 +132,8 @@ function getLanduseLayer() {
     var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
     return wmsLayer;
 }
+
+function getPopLayer() {
+    var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
+    return wmsLayer;
+}
