@@ -181,28 +181,29 @@ function initVar() {
         hiddenIcon: 'icon icon-eye-slash'
     });
 
-    /* 河湖水系图例 */
-    // htmlLegend2 = L.control.htmllegend({
-    //     position: 'bottomright',
-    //     legends: [{
-    //         name: '河湖水系分布',
-    //         layer: LAYER_DRINKINGWATERSOURCE,
-    //         elements: [ {
-    //             label: '水域分布',
-    //             html: '',
-    //             style: {
-    //                 'background': '#fff url(../img/legend5.png) no-repeat',
-    //                 'width': '15px',
-    //                 'height': '15px'
-    //             }
-    //         }]
-    //     }],
-    //     collapseSimple: true,
-    //     detectStretched: true,
-    //     defaultOpacity: 1,
-    //     visibleIcon: 'icon icon-eye',
-    //     hiddenIcon: 'icon icon-eye-slash'
-    // });
+    /* 土地利用图例 */
+    htmlLegend2 = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: '土地利用',
+            layer: LAYER_LANDUSE,
+            elements: [{
+                label: ' ',
+                html: '',
+                style: {
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background-size': '230px 80px',
+                    'width': '230px',
+                    'height': '80px'
+                }
+            }]
+        }],
+        collapseSimple: true,
+        detectStretched: true,
+        defaultOpacity: 1,
+        visibleIcon: 'icon icon-eye',
+        hiddenIcon: 'icon icon-eye-slash'
+    });
 
     /* 内涝分布范围图例 */
     // htmlLegend3 = L.control.htmllegend({

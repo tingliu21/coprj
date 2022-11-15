@@ -161,6 +161,13 @@
                     <webAppConfig>
                         <contextPath>/${project.artifactId}</contextPath>
                     </webAppConfig>
+                    <webApp>
+                        <contextPath>/${project.artifactId}</contextPath>
+                        <_initParams>
+                            <org.eclipse.jetty.servlet.Default.useFileMappedBuffer>false
+                            </org.eclipse.jetty.servlet.Default.useFileMappedBuffer>
+                        </_initParams>
+                    </webApp>
                 </configuration>
             </plugin>
         </plugins>

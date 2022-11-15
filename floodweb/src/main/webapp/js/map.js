@@ -44,7 +44,7 @@ $(document).ready(function () {
 
     /* 图例控件 */
     map.addControl(htmlLegend1);
-    // map.addControl(htmlLegend2);
+    map.addControl(htmlLegend2);
     // map.addControl(htmlLegend3);
     // map.addControl(htmlLegendSxyd);
     // map.addControl(htmlLegendWater);

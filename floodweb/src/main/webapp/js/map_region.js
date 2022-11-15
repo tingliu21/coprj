@@ -129,11 +129,6 @@ function getFloodLayer() {
  * @returns {*}
  */
 function getLanduseLayer() {
-    var layer;
-    if (authority == "331000") {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/SXYD/MapServer"});
-    } else {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/SXYD_" + REGION_CODE_ACRONYM[authority] + "/MapServer"});
-    }
-    return layer;
+    var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
+    return wmsLayer;
 }
