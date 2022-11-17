@@ -68,7 +68,56 @@ $(document).ready(function () {
 	$("#cb-wts").click(function (e) {
 		toggleWtsOverlay(e.target);
 	});
+	/* 手机号风险查询 */
+	$('#btn-fuzzy-search').click(function() {
+		$.get(WEB_PATH + "/log/add?source=web&op=查询",function(){});
+		var searchText = $('#fuzzy-search-text').val();
+		if (isLonLat(searchText)) {
+			/* 根据经纬度定位 */
+			var lonlat = getLonLat(searchText);
+			if (map.hasLayer(queryLocationMarker)) {
+				map.removeLayer(queryLocationMarker);
+			}
+			queryLocationMarker = L.marker(L.latLng(lonlat[1], lonlat[0])).addTo(map);
+			map.panTo(L.latLng(lonlat[1], lonlat[0]));
 
+			let offset = 0.00001;
+			let minx = lonlat[0] - offset;
+			let miny = lonlat[1] - offset;
+			let maxx = lonlat[0] + offset;
+			let maxy = lonlat[1] + offset;
+			//getRasterValue(minx, miny, maxx, maxy);
+
+			$.get(WEB_PATH + "/map/queryInfo?lat=" + lonlat[1] + "&lon=" + lonlat[0], function(data) {
+				if (data.ok) {
+					if (map.hasLayer(queryLocationMarker)) {
+						map.removeLayer(queryLocationMarker);
+					}
+					queryLocationMarker = L.marker(L.latLng(lonlat[1], lonlat[0])).addTo(map);
+					queryLocationMarker.bindPopup("<p>常住地淹没风险："+data.data+"</p>").openPopup();
+					map.panTo(L.latLng(lonlat[1], lonlat[0]));
+				} else {
+					alert(data.msg);
+				}
+
+			});
+		} else {
+			/* 根据地址查经纬度 */
+			/* 修改日期：2022-8-30 暂时隐去，后续根据手机号查询经纬度
+            $.get(WEB_PATH + "/geocode/geo?address=" + searchText, function(data) {
+                if (data.ok) {
+                    if (map.hasLayer(queryLocationMarker)) {
+                        map.removeLayer(queryLocationMarker);
+                    }
+                    queryLocationMarker = L.marker(L.latLng(data.data.lat, data.data.lon)).addTo(map);
+                    queryLocationMarker.bindPopup($('#fuzzy-search-text').val() + "<br>" + data.data.lat + ", " + data.data.lon).openPopup();
+                    map.panTo(L.latLng(data.data.lat, data.data.lon));
+                } else {
+                    alert(data.msg);
+                }
+            });*/
+		}
+	});
     /*
      * sidebar设置
      */

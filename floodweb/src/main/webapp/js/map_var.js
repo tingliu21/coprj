@@ -113,6 +113,8 @@ function initVar() {
     LAYER_LANDUSE = getLanduseLayer();
     LAYER_POP = getPopLayer();
 
+    queryLocationMarker = L.marker(L.latLng(0, 0));
+
     satellite = L.layerGroup([LAYER_TDT_SATELLITE, LAYER_TDT_SATELLITE_ANNO]);
     normal = L.layerGroup([LAYER_TDT_NORMAL, LAYER_TDT_NORMAL_ANNO]);
     terrain = L.layerGroup([LAYER_TDT_TERRAIN, LAYER_TDT_TERRAIN_ANNO]);
@@ -255,16 +257,16 @@ function initVar() {
     htmlLegend_pop = L.control.htmllegend({
         position: 'bottomright',
         legends: [{
-            name: '人口密度',
+            name: '人口密度(万/km2)',
             layer: LAYER_POP,
             elements: [{
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
-                    'background-size': '230px 80px',
+                    'background': '#FFF url(' + WEB_PATH + '/img/legend_pop.png) no-repeat',
+                    'background-size': '230px 25px',
                     'width': '230px',
-                    'height': '80px'
+                    'height': '25px'
                 }
             }]
         }],

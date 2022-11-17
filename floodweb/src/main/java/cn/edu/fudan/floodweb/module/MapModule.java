@@ -13,6 +13,8 @@ import org.nutz.mvc.Scope;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CheckSession;
 
+import java.math.BigDecimal;
+
 @IocBean
 @At("/map")
 @Ok("json")
@@ -139,7 +141,9 @@ public class MapModule {
         if (!response.equals("") && response != null) {
             JSONObject jsonRes = JSON.parseObject(response);
             JSONObject jsonFeature = jsonRes.getJSONArray("features").getJSONObject(0);
-            return re.setv("ok", true).setv("data",jsonFeature.getJSONObject("properties").getDoubleValue("GRAY_INDEX") );
+            double value = jsonFeature.getJSONObject("properties").getDoubleValue("GRAY_INDEX");
+            BigDecimal bg = new BigDecimal(value);
+            return re.setv("ok", true).setv("data", bg.setScale(3, BigDecimal.ROUND_HALF_UP));
         } else {
             return re.setv("ok", false).setv("msg", "查询服务失效！");
         }
