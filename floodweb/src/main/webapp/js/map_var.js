@@ -113,23 +113,6 @@ function initVar() {
     LAYER_LANDUSE = getLanduseLayer();
     LAYER_POP = getPopLayer();
 
-    // highlightStyle = {
-    //     "color": "#ffff00",
-    //     "fillColor": "#ffffff",
-    //     "weight": 3,
-    //     "opacity": 1,
-    //     "fillOpacity": 0.5
-    // };
-
-    // DIST_STYLE = {
-    //     fillOpacity: 1.0,
-    //     color: "#fff",
-    //     weight: 1
-    // };
-
-    // queryLocationMarker = L.marker(L.latLng(0, 0));
-
-
     satellite = L.layerGroup([LAYER_TDT_SATELLITE, LAYER_TDT_SATELLITE_ANNO]);
     normal = L.layerGroup([LAYER_TDT_NORMAL, LAYER_TDT_NORMAL_ANNO]);
     terrain = L.layerGroup([LAYER_TDT_TERRAIN, LAYER_TDT_TERRAIN_ANNO]);
@@ -148,22 +131,6 @@ function initVar() {
         "pop": LAYER_POP
         // "dem":LAYER_DEMTOPP
     };
-
-    // heatmapLayer = new HeatmapOverlay({
-    //     "maxOpacity": 0,
-    //     radius: 20,
-    //     latField: 'lat',
-    //     lngField: 'lng',
-    //     valueField: 'count'
-    // });
-
-    // 测量控件
-    // measureControl = L.control.measure({
-    //     primaryLengthUnit: 'meters',
-    //     secondaryLengthUnit: 'kilometers',
-    //     primaryAreaUnit: 'sqmeters'
-    // });
-
 
     /* 风险等级图例 */
     htmlLegend_risk = L.control.htmllegend({
@@ -308,18 +275,6 @@ function initVar() {
         hiddenIcon: 'icon icon-eye-slash'
     });
 
-
-
-
-
-    /* 在地图上任意点击则清空所有Marker */
-    // normal_click = function(e) {
-    //     if (map.hasLayer(queryLocationMarker)) {
-    //         map.removeLayer(queryLocationMarker);
-    //     }
-    //     highlightLayer.clearLayers();
-    // };
-
     /* 在地图上任意双击则按经纬度查询风险值 */
     double_click = function (e) {
         $.get( "rainflood/queryLocinundation?qdate=" + formatDate(new Date()) + "&num=3&clat=" + e.latlng.lat + "&clon=" + e.latlng.lng, function(data) {
@@ -340,82 +295,6 @@ function initVar() {
     map_mousemove = function (e) {
         $('#latlon_info').text("经纬度：" + e.latlng.lat.toFixed(5) + "°N, " + e.latlng.lng.toFixed(5) + "°E");
     };
-
-    /* 点击鼠标添加书签 */
-    // addbookmark_click = function(e) {
-    //     //记录日志
-    //     $.get(WEB_PATH + "/log/add?source=web&op=添加书签",function(){});
-    //
-    //     if (map.hasLayer(queryLocationMarker)) {
-    //         map.removeLayer(queryLocationMarker);
-    //     }
-    //     queryLocationMarker = L.marker(e.latlng).addTo(map);
-    //     queryLocationMarker.bindPopup(POPUP_ADD_BOOKMARK).openPopup();
-    //     map.off("click");
-    //     map.on("click", normal_click);
-    //     map.getContainer().style.cursor = "";
-    //     $('#add-bookmark').click(function() {
-    //         if ($('#bm_title').val() == "") {
-    //             alert("书签标题不能为空！");
-    //             return;
-    //         }
-    //         $.get(WEB_PATH + "/bookmark/add?title=" + $('#bm_title').val() + "&content=" + $('#bm_content').val() + "&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng, function(data) {
-    //             if (data.ok) {
-    //                 alert("添加成功");
-    //
-    //                 $("#jsGrid").jsGrid("insertItem", data.data).done(function() {
-    //                     $("#jsGrid").jsGrid("refresh");
-    //                 });
-    //             } else {
-    //                 alert("添加失败");
-    //             }
-    //         });
-    //     });
-    //     queryLocationMarker.on("popupclose", function() {
-    //         map.removeLayer(queryLocationMarker);
-    //     });
-    // };
-
-    /* 以聚合方式加载所有人口 */
-    // $.get(WEB_PATH + "/ent/querylite?region=" + REGION_CODE_NAME[authority], function(data) {
-    //     layergroup_ent = L.markerClusterGroup({showCoverageOnHover:false});
-    //     var options_ent = {
-    //         icon: 'building',
-    //         borderColor: '#169eff',
-    //         textColor: '#169eff',
-    //         innerIconAnchor: [0,0]
-    //     };
-    //     for (var i = 0; i < data.length; i++) {
-    //         var lon = data[i].lon;
-    //         var lat = data[i].lat;
-    //         layergroup_ent.addLayer(L.marker([lat, lon], {
-    //             icon: L.BeautifyIcon.icon(options_ent)
-    //         }).bindPopup("<p style='font-weight: bold;'>" + data[i].name + "</p><p>地址：" + data[i].address + "</p>"
-    //             + "<p><button class='view-detail-ent' id='view-detail-ent' onclick=showEntInfo('" + data[i].creditCode +"')>查看详细</button></p>"));
-    //
-    //     }
-    //
-    // });
-
-    // 加载所有灾害事件
-    // $.get(WEB_PATH + "/wts/query?region=" + REGION_CODE_NAME[authority], function(data) {
-    //     layergroup_wts = L.layerGroup([]);
-    //     var options_wts = {
-    //         icon: 'trash-restore',
-    //         borderColor: '#42a7a3',
-    //         textColor: '#42a7a3',
-    //         innerIconAnchor: [0,0]
-    //     };
-    //     for (var i = 0; i < data.length; i++) {
-    //         var lon = data[i].lon;
-    //         var lat = data[i].lat;
-    //         var popup_content = "<p style='font-weight: bold;'>" + data[i].name + "</p><p>工艺：" + data[i].treatment + "</p>"
-    //             + "<p><button class='view-detail-wts' id='view-detail-wts' onclick='showWtsInfo(" + '\"' + data[i].id + '\"' + ")'>查看详细</button></p>";
-    //         L.marker([lat, lon], {
-    //             icon: L.BeautifyIcon.icon(options_wts)
-    //         }).addTo(layergroup_wts).bindPopup(popup_content);
-    //     }
-    // });
 
 }
 

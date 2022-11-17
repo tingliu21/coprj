@@ -13,34 +13,14 @@ $(document).ready(function () {
     });
     map.getContainer().style.cursor = "default";
 
-    /* 高亮图层 */
-    // highlightLayer = L.geoJSON([],{style: highlightStyle}).addTo(map);
-    // L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
 	/* 默认加载影像底图 */
     satellite.addTo(map);
-    //LAYER_TZBOUNDARY.addTo(map);
-
-	// $.get(getMaskLayer(), function(data) {
-	// 	LAYER_MASK = L.geoJSON(data,{
-	// 		style: function (feature) {
-	// 			return {color: '#fff', fillOpacity:0.8, stroke:false};
-	// 		}});
-	// 	map.addLayer(LAYER_MASK);
-	// });
 
     /* 放大缩小按钮控件 */
     L.control.zoom({position:"topright"}).addTo(map);
-    // map.addControl(sidebar_bookmark);
-    // map.addControl(sidebar_layer);
-
-	/* 测量控件 */
-    // measureControl.addTo(map);
 
     map.on("mousemove", map_mousemove);
     map.on("dblclick", double_click);
-    // map.on("click", normal_click);
-    // map.on("movestart", function() {map.getContainer().style.cursor = "";});
-    // map.on("moveend", function() {map.getContainer().style.cursor = "default";});
 
     /* 图例控件 */
     map.addControl(htmlLegend_risk);
@@ -89,182 +69,6 @@ $(document).ready(function () {
 		toggleWtsOverlay(e.target);
 	});
 
-	/* 模糊查询 */
-    // $('#btn-fuzzy-search').click(function() {
-    // 	$.get(WEB_PATH + "/log/add?source=web&op=查询",function(){});
-    // 	var searchText = $('#fuzzy-search-text').val();
-    // 	if (isLonLat(searchText)) {
-    // 		/* 根据经纬度定位 */
-    // 		var lonlat = getLonLat(searchText);
-	// 		if (map.hasLayer(queryLocationMarker)) {
-	// 			map.removeLayer(queryLocationMarker);
-	// 		}
-	// 		queryLocationMarker = L.marker(L.latLng(lonlat[1], lonlat[0])).addTo(map);
-	// 		map.panTo(L.latLng(lonlat[1], lonlat[0]));
-	//
-	// 		let offset = 0.00001;
-	// 		let minx = lonlat[0] - offset;
-	// 		let miny = lonlat[1] - offset;
-	// 		let maxx = lonlat[0] + offset;
-	// 		let maxy = lonlat[1] + offset;
-	// 		//getRasterValue(minx, miny, maxx, maxy);
-	//
-    // 		$.get(WEB_PATH + "/map/queryInfo?lat=" + lonlat[1] + "&lon=" + lonlat[0], function(data) {
-    // 			if (data.ok) {
-    // 				if (map.hasLayer(queryLocationMarker)) {
-    // 	        		map.removeLayer(queryLocationMarker);
-    // 	            }
-    // 	            queryLocationMarker = L.marker(L.latLng(lonlat[1], lonlat[0])).addTo(map);
-    // 	            queryLocationMarker.bindPopup("<p>淹没深度："+data.data+"</p>").openPopup();
-    // 	            map.panTo(L.latLng(lonlat[1], lonlat[0]));
-    // 			} else {
-    // 				alert(data.msg);
-    // 			}
-	//
-    // 		});
-    // 	} else {
-    // 		/* 根据地址查经纬度 */
-    // 		/* 修改日期：2022-8-30 暂时隐去，后续根据手机号查询经纬度
-    // 		$.get(WEB_PATH + "/geocode/geo?address=" + searchText, function(data) {
-    // 			if (data.ok) {
-    // 				if (map.hasLayer(queryLocationMarker)) {
-    // 	        		map.removeLayer(queryLocationMarker);
-    // 	            }
-    // 	            queryLocationMarker = L.marker(L.latLng(data.data.lat, data.data.lon)).addTo(map);
-    // 	            queryLocationMarker.bindPopup($('#fuzzy-search-text').val() + "<br>" + data.data.lat + ", " + data.data.lon).openPopup();
-    // 	            map.panTo(L.latLng(data.data.lat, data.data.lon));
-    // 			} else {
-    // 				alert(data.msg);
-    // 			}
-    // 		});*/
-    // 	}
-    // });
-
-	/**
-	 * 灾害事件查询
-	 */
-	// $('#btn-search-ent').click(function () {
-	// 	$("#jsGrid-ent").jsGrid("search", {
-	// 		name: $('#txt-search-ent').val(),
-	// 		region: REGION_CODE_NAME[authority]
-	// 	});
-	// });
-	/**
-	 灾害事件查询结果列表
-	 */
-	// $("#jsGrid-ent").jsGrid({
-	// 	width: "100%",
-	// 	height: "300px",
-	//
-	// 	controller: {
-	// 		loadData: function(filter) {
-	// 			return $.ajax({
-	// 				type: "GET",
-	// 				url: WEB_PATH + "/wts/query",
-	// 				data: filter
-	// 			});
-	// 		},
-	// 		insertItem: $.noop,
-	// 		updateItem: $.noop,
-	// 		deleteItem: $.noop
-	// 	},
-	// 	autoload: false,
-	// 	inserting: false,
-	// 	editing: false,
-	// 	sorting: false,
-	// 	paging: true,
-	// 	pagerFormat: "{prev} {pages} {next}    {pageIndex} of {pageCount}",
-	// 	pagePrevText: "上一页",
-	// 	pageNextText: "下一页",
-	// 	pageFirstText: "第一页",
-	// 	pageButtonCount: 5,
-	// 	fields: [
-	// 		{ name: "name", title: "灾害事件", type: "text", validate: "required" }
-	// 	],
-	// 	rowClick: function(args) {
-	// 		if (map.hasLayer(queryLocationMarker)) {
-	// 			map.removeLayer(queryLocationMarker);
-	// 		}
-	// 		queryLocationMarker = L.marker(L.latLng(args.item.lat, args.item.lon), {
-	// 			draggable: true,
-	// 			autoPan: true
-	// 		}).addTo(map);
-	// 		var popupContent = makeSourcePopupContent(args.item, queryLocationMarker.getLatLng());
-	// 		queryLocationMarker.bindPopup(popupContent).openPopup();
-	// 		queryLocationMarker.on('moveend', function(evt) {
-	// 			var popupContent = makeSourcePopupContent(args.item, queryLocationMarker.getLatLng());
-	// 			queryLocationMarker.setPopupContent(popupContent).openPopup();
-	// 		});
-	// 		map.panTo(L.latLng(args.item.lat, args.item.lon));
-	// 	}
-	// });
-
-
-	/*
-     ***************** 书签按钮 *****************/
-    // $('#btn-add-bookmark').click(function() {
-    // 	map.getContainer().style.cursor = "crosshair";
-    // 	map.on("click", addbookmark_click);
-    // });
-
-	/*
-     ********************  书签列表 **************/
-    // $("#jsGrid").jsGrid({
-    //     width: "100%",
-    //     height: "500px",
-    //
-    //     controller: {
-    //         loadData: function() {
-    //         	return ($.get("/bookmark/query", function(data) {
-    //
-    //         	}));
-    //         },
-    //         insertItem: $.noop,
-    //         updateItem: $.noop,
-    //         deleteItem: $.noop
-    //     },
-    //     autoload: true,
-    //     inserting: false,
-    //     editing: true,
-    //     sorting: true,
-    //     paging: true,
-    //     deleteConfirm: "确定要删除?",
-    //     pagerFormat: "页码: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-    //     pagePrevText: "上一页",
-    //     pageNextText: "下一页",
-    //     pageFirstText: "第一页",
-    //     pageLastText: "最后页",
-	//
-	//
-    //     fields: [
-    //         { name: "title", title: "标题", type: "text", width: 130, validate: "required" },
-    //         { name: "content", title: "内容", type: "text", width: 200 },
-    //         { type: "control",  modeSwitchButton: false }
-    //     ],
-    //
-    //     onItemDeleted: function(args) {
-    //     		var item = args.item;
-    //     		$.get(WEB_PATH + "/bookmark/delete?bm_id=" + item.id, function() {
-    //
-    //     		});
-    //     },
-    //     onItemUpdated: function(args) {
-    //     		var item = args.item;
-    //     		$.post(WEB_PATH + "/bookmark/update", item, function() {
-    //
-    //     		});
-    //     },
-    //     rowClick: function(args) {
-    //     	if (map.hasLayer(queryLocationMarker)) {
-	//         	map.removeLayer(queryLocationMarker);
-	//         }
-	//         queryLocationMarker = L.marker(L.latLng(args.item.lat, args.item.lon)).addTo(map);
-	//         var popupContent = "标题"
-	//         queryLocationMarker.bindPopup(args.item.content).openPopup();
-	//         map.panTo(L.latLng(args.item.lat, args.item.lon));
-    //     }
-    // }); /* *** 书签列表结束 ********/
-
     /*
      * sidebar设置
      */
@@ -274,63 +78,6 @@ $(document).ready(function () {
         container: 'sidebar', // the DOM container or #ID of a predefined sidebar container that should be used
         position: 'left',     // left or right
     }).addTo(map);
-
-    /*
-     * 搜索设置
-     */
-    // $('#btn-fuzzy-search-setting').click(function() {
-    // 	$('#settingModal').modal('show');
-    // });
-    // $('#btn-lonlat-degree-submit').click(function() {
-    // 	$('#settingModal').modal('hide');
-    // 	$('#fuzzy-search-text').val($('#lonlat-degree-lon').val() + "," + $('#lonlat-degree-lat').val());
-    // });
-    // $('#btn-lonlat-dm-submit').click(function() {
-    // 	if ($('#lonlat-dm-lon-degree').val() == "" || $("#lonlat-dm-lon-min").val() == "" || $('#lonlat-dm-lat-degree').val() == "" || $('#lonlat-dm-lat-min').val() == "") {
-    // 		alert("输入不可为空");
-    // 		return;
-    // 	}
-    // 	$('#settingModal').modal('hide');
-    // 	$('#fuzzy-search-text').val(dms2num($('#lonlat-dm-lon-degree').val(), $("#lonlat-dm-lon-min").val(), 0) + "," + dms2num($('#lonlat-dm-lat-degree').val(), $('#lonlat-dm-lat-min').val(), 0));
-    // });
-    // $('#btn-lonlat-dms-submit').click(function() {
-    // 	if ($('#lonlat-dms-lon-degree').val() == ""
-    // 			|| $("#lonlat-dms-lon-min").val() == ""
-    // 			|| $("#lonlat-dms-lon-sec").val() == ""
-    // 			|| $('#lonlat-dms-lat-degree').val() == ""
-    // 			|| $('#lonlat-dms-lat-min').val() == ""
-    // 			|| $("#lonlat-dms-lat-sec").val() == "" ) {
-    // 		alert("输入不可为空");
-    // 		return;
-    // 	}
-    // 	$('#settingModal').modal('hide');
-    // 	$('#fuzzy-search-text').val(
-    // 			dms2num($('#lonlat-dms-lon-degree').val(), $("#lonlat-dms-lon-min").val(), $("#lonlat-dms-lon-sec").val()) + "," +
-    // 			dms2num($('#lonlat-dms-lat-degree').val(), $('#lonlat-dms-lat-min').val(), $("#lonlat-dms-lat-sec").val()));
-    // });
-
-    /* 显示核密度图 */
-	// $('input:radio[name="heatmap-radio"]').change(function () {
-	// 	$.get(WEB_PATH + "/heatmap/" + $("input:radio[name='heatmap-radio']:checked").val() + "?region=" + REGION_CODE_NAME[authority], function(data) {
-	// 		heatmapLayer.setData({
-	// 			max: Number($("input:radio[name='heatmap-radio']:checked").attr('extra')),
-	// 			data: data
-	// 		});
-	// 		if (!map.hasLayer(heatmapLayer)) {
-	// 			map.addLayer(heatmapLayer);
-	// 		}
-	// 	});
-	// 	LAYER_TZBOUNDARY.setOpacity(0);
-	// });
-
-	/* 清除所有核密度图 */
-	// $('#btn-heatmap-clear').click(function () {
-	// 	if (map.hasLayer(heatmapLayer)) {
-	// 		map.removeLayer(heatmapLayer);
-	// 	}
-	// 	$("input[name='heatmap-radio']:checked").prop('checked', false);
-	// 	LAYER_TZBOUNDARY.setOpacity(1);
-	// });
 
 	/**
 	 *  处理时间轴
@@ -427,7 +174,7 @@ $(document).ready(function () {
  * @param e
  */
 function changeDataTimeAxios(e) {
-	let d = new Date(timeList[e.options.index].time)
+	let d = new Date($('#risk-date').val().split("-")[0] + "-" + timeList[e.options.index].time)
 	LAYER_RISK = L.tileLayer.wms(GEOSERVER_PATH, {
 					layers: "inun_"+formatDate2(d),
 					 format: 'image/png',
@@ -489,7 +236,7 @@ function formatDate2(date) {
 /**
  * 格式化日期
  * @param date
- * @returns {string} 格式化为yyyyMMdd
+ * @returns {string} 格式化为MMdd
  */
 function formatDate3(date) {
 	let m = date.getMonth() + 1;

@@ -64,15 +64,7 @@ body,html,.parent{
     margin-top: 30px;
     margin-right:10px;
 }
-/*#search-box {*/
-/*    position: fixed;*/
-/*    top: 95px;*/
-/*    left: 0;*/
-/*    right:0;*/
-/*    margin: auto;*/
-/*    z-index: 1000;*/
-/*    width: 350px;*/
-/*}*/
+
 #footer {
     width: 100%;
     background: #223961 url("../img/bg-footer.jpg") repeat left top;
