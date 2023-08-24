@@ -1,5 +1,6 @@
 var WEB_PATH = "/floodweb";
-var GEOSERVER_PATH="http://localhost:8088/geoserver/sde/wms";
+// var GEOSERVER_PATH="http://localhost:8088/geoserver/sde/wms";
+var GEOSERVER_PATH="https://ilab.fudan.edu.cn/geoserver/sde/wms";
 var LAYER_TDT_NORMAL;
 var LAYER_TDT_NORMAL_ANNO;
 var LAYER_TDT_SATELLITE;
@@ -144,7 +145,7 @@ function initVar() {
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_1.png) no-repeat',
+                    'background': '#FFF url(img/legend_1.png) no-repeat',
                     'width': '230px',
                     'height': '30px'
                 }
@@ -167,7 +168,7 @@ function initVar() {
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background': '#FFF url(img/legend_soil.png) no-repeat',
                     'background-size': '230px 80px',
                     'width': '230px',
                     'height': '80px'
@@ -191,7 +192,9 @@ function initVar() {
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    // 复旦的服务器web请求地址多了envi1，暂时用相对路径，从index.html页面访问img
+                    // 'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
+                    'background': '#FFF url(img/legend_landuse.png) no-repeat',
                     'background-size': '230px 80px',
                     'width': '230px',
                     'height': '80px'
@@ -215,10 +218,10 @@ function initVar() {
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_landuse.png) no-repeat',
-                    'background-size': '230px 80px',
+                    'background': '#FFF url(img/legend_water.png) no-repeat',
+                    'background-size': '230px 25px',
                     'width': '230px',
-                    'height': '80px'
+                    'height': '25px'
                 }
             }]
         }],
@@ -263,7 +266,7 @@ function initVar() {
                 label: ' ',
                 html: '',
                 style: {
-                    'background': '#FFF url(' + WEB_PATH + '/img/legend_pop.png) no-repeat',
+                    'background': '#FFF url(img/legend_pop.png) no-repeat',
                     'background-size': '230px 25px',
                     'width': '230px',
                     'height': '25px'
