@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    <title>长三角地区洪涝灾害风险评估管理系统</title>
+    <title>洪涝灾害风险评估管理系统</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/leaflet.css">
@@ -12,7 +12,7 @@
 
 <!--    <link rel="stylesheet" href="css/leaflet.contextmenu.min.css" /> &lt;%&ndash;右键菜单插件&ndash;%&gt;-->
     <link rel="stylesheet" href="css/leaflet-measure.css" /> <!--测量插件-->
-    <link rel="stylesheet" href="css/leaflet-beautify-marker-icon.css" /> <!--Marker插件-->
+    <link rel="stylesheet" href="css/leaflet-beautify-marker-icon.css" /> <!--Marker插件 图标-->
 <!--    <link rel="stylesheet" href="css/MarkerCluster.css" /> &lt;%&ndash;聚合点插件&ndash;%&gt;-->
 <!--    <link rel="stylesheet" href="css/MarkerCluster.Default.css" /> &lt;%&ndash;聚合点插件&ndash;%&gt;-->
     <link rel="stylesheet" href="css/jsgrid.min.css" /> <!--grid插件-->
@@ -62,8 +62,8 @@
 <div class="parent">
 
     <div id="header" class="top">
-        <span id="logo"><i class="fas fa-fan"></i></span><span id="title">长三角地区洪涝灾害风险评估管理系统</span>
-        <div id="div-current_region">当前区域：<span id="current_region">杭州市</span></div>
+        <span id="logo"><i class="fas fa-fan"></i></span><span id="title">洪涝灾害风险评估管理系统</span>
+<!--        <div id="div-current_region">当前区域：<span id="current_region">杭州市</span></div>-->
 <!--        <img id="logo" src="img/logo.png">-->
 <!--        <div id="welcome">欢迎您：<!=session.getAttribute("me") > <a href="user/logout" class="fa fa-sign-out-alt" style="color: white;"></a></div>-->
     </div>
@@ -108,7 +108,7 @@
                     <div><input type="checkbox" id="landuse" class="operation-overlay"><label>土地利用数据</label></div>
                     <div><input type="checkbox" id="soil" class="operation-overlay"><label>土壤数据</label></div>
                     <div><input type="checkbox" id="water" class="operation-overlay"><label>河湖水系分布</label></div>
-                    <div><input type="checkbox" id="flood" class="operation-overlay"><label>内涝分布</label></div>
+<!--                    <div><input type="checkbox" id="flood" class="operation-overlay"><label>内涝分布</label></div>-->
                     <div><input type="checkbox" id="pop" class="operation-overlay"><label>人口密度</label></div>
                 </div>
             </div>
@@ -181,7 +181,7 @@
     <div id="footer" class="bottom">
         <div id="latlon_info"></div>
 
-        <div id="copyright">Desighed by 复旦大学</div>
+        <div id="copyright"></div>
 
     </div>
 </div>
