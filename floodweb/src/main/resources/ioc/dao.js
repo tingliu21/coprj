@@ -16,9 +16,9 @@ var ioc = {
         },
         fields : {
             driverClassName : "com.mysql.cj.jdbc.Driver",
-            url : "jdbc:mysql://localhost:3306/flooddb?serverTimezone=UTC&characterEncoding=utf-8 ",
+            url : "jdbc:mysql://localhost:3306/floodweb?serverTimezone=UTC&characterEncoding=utf-8 ",
             username : "root",
-            password : "3030644021",
+            password : "123456",
             maxWait: 15000
         }
     },
