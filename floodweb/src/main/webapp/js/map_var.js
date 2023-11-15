@@ -46,7 +46,9 @@ var normal_click;
 var double_click;
 var map_mousemove;
 var addbookmark_click;
-var layergroup_ent; //人口
+var layergroup_rain1; //降雨聚合图
+var layergroup_rain3;
+var layergroup_rain5;
 var layergroup_wts; //灾害事件
 // var DIST_STYLE;
 var lineOption={

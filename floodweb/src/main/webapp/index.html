@@ -13,8 +13,8 @@
 <!--    <link rel="stylesheet" href="css/leaflet.contextmenu.min.css" /> &lt;%&ndash;右键菜单插件&ndash;%&gt;-->
     <link rel="stylesheet" href="css/leaflet-measure.css" /> <!--测量插件-->
     <link rel="stylesheet" href="css/leaflet-beautify-marker-icon.css" /> <!--Marker插件 图标-->
-<!--    <link rel="stylesheet" href="css/MarkerCluster.css" /> &lt;%&ndash;聚合点插件&ndash;%&gt;-->
-<!--    <link rel="stylesheet" href="css/MarkerCluster.Default.css" /> &lt;%&ndash;聚合点插件&ndash;%&gt;-->
+    <link rel="stylesheet" href="css/MarkerCluster.css" /> <!--聚合点插件&ndash-->
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css" /> <!--聚合点插件-->
     <link rel="stylesheet" href="css/jsgrid.min.css" /> <!--grid插件-->
     <link rel="stylesheet" href="css/jsgrid-theme.min.css" />
 <!--    <link rel="stylesheet" href="css/leaflet.groupedlayercontrol.min.css" />-->
@@ -33,7 +33,7 @@
     <script src="js/Leaflet.Control.Custom.js"></script> <!--自定义Control插件-->
     <script src="js/leaflet-measure.js"></script> <!--测量插件-->
     <script src="js/leaflet-beautify-marker-icon.js"></script> <!--Marker插件-->
-<!--    <script src="js/leaflet.markercluster.js"></script> &lt;%&ndash;聚合点插件&ndash;%&gt;-->
+    <script src="js/leaflet.markercluster.js"></script> <!--聚合点插件-->
 <!--    <script src="js/heatmap.min.js"></script> --> <!--热力图插件-->
 <!--    <script src="js/leaflet-heatmap.js"></script> --> <!--热力图插件-->
     <script src="js/echarts.js"></script>
@@ -126,6 +126,7 @@
                             <input type="text" class="form-control" id="risk-date" placeholder="日期"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                     </div>
+                    <div><input type="checkbox" id="cb-precip" checked ><label>当天降雨信息</label></div>
                     <button id="btn-risk-search" class="btn btn-primary btn-block" type="button">查询</button>
                     <button id="btn-risk-reset" class="btn btn-default btn-block" type="button">重置</button>
                 </div>

@@ -220,3 +220,8 @@ body,html,.parent{
     width:500px;
     height: 300px;
 }
+/*leaflet聚合图层的自定义图标把背景色设为透明*/
+.leaflet-div-icon {
+    background-color: #00000000;
+    border:0px;
+}
