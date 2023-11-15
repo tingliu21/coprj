@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<!--    <script src="js/jquery-3.3.1.min.js" ></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/signup.js"></script>
+    <style>
+        body {
+            color: #3a3a3a;
+            background: url(img/login-bg.jpg) #eeeeee no-repeat center center;
+            background-size: cover;
+            background-attachment:fixed;
+        }
+        .panel {
+            max-width: 800px;
+            margin: 0 auto;
+            padding:0;
+        }
+        .form-horizontal {
+            /* max-width: 540px; */
+            padding: 0 30px 0 0;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 注册表单
+========================================== -->
+<div class="container">
+    <h1 class="text-center">用 户 注 册</h1>
+    <div class="panel panel-default" style="background-color: rgba(255,255,255,0.6);">
+        <div class="panel-body row">
+            <form class="form-horizontal col-sm-8" style="border-right: solid 1px #EAEAEA;">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">地区</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="region">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="organization" class="col-sm-3 control-label">单位</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="organization">
+                        <span class="glyphicon form-control-feedback hidden" aria-hidden="true"></span>
+                        <span id="organizationHelpBlock" class="help-block hidden" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" class="col-sm-3 control-label">用户名</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="username">
+                        <span class="glyphicon form-control-feedback hidden" aria-hidden="true"></span>
+                        <span id="usernameHelpBlock" class="help-block hidden" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">密码</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="password" >
+                        <span class="glyphicon form-control-feedback hidden" aria-hidden="true"></span>
+                        <span id="passwordHelpBlock" class="help-block hidden" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="repassword" class="col-sm-3 control-label">确认密码</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="repassword" >
+                        <span class="glyphicon form-control-feedback hidden" aria-hidden="true"></span>
+                        <span id="repasswordHelpBlock" class="help-block hidden" ></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="col-sm-3 control-label">手机</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="phone">
+                        <span class="glyphicon form-control-feedback hidden" aria-hidden="true"></span>
+                        <span id="phoneHelpBlock" class="help-block hidden" ></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn_signup">注册</button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-sm-4" >
+                <h4>注册说明</h4>
+                <ol style="padding-left:20px;">
+                    <li>注册表中所有信息都须填写完整。</li>
+                    <li>用户名要求4-16个字符，仅包含字母、数字、下划线、横线</li>
+                    <li>密码仅包含字母、数字、下划线，不少于6个字符</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div> <!-- /注册表单 -->
+
+<!--  注册成功对话框
+================================= -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+            </div>
+            <div class="modal-body" >
+                注册成功。正在导航至登录页面……<span id="modal_content" style="color:#4dae4a"></span>
+            </div>
+        </div>
+    </div>
+</div> <!--  /注册成功对话框 -->
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+</body>
+</html>
