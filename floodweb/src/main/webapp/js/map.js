@@ -23,7 +23,7 @@ $(document).ready(function () {
     map.on("dblclick", double_click);
 
     /* 图例控件 */
-    map.addControl(htmlLegend_risk);
+	// map.addControl(htmlLegend_risk);
     map.addControl(htmlLegend_soil);
     map.addControl(htmlLegend_landuse);
 	map.addControl(htmlLegend_water);
@@ -67,6 +67,13 @@ $(document).ready(function () {
 	/* 显示灾害事件 */
 	$("#cb-wts").click(function (e) {
 		toggleWtsOverlay(e.target);
+	});
+
+	/* 关闭风险查询对话框 */
+	$("#riskInfoModal").on('hide.bs.modal',function (e) {
+		if (map.hasLayer(queryLocationMarker)) {
+			map.removeLayer(queryLocationMarker);
+		}
 	});
 	/* 手机号风险查询 */
 	$('#btn-fuzzy-search').click(function() {
@@ -177,7 +184,17 @@ $(document).ready(function () {
 	// 查询灾害风险图
 	$('#btn-risk-search').click(function () {
 		if ($('#risk-date').val() != "") {
+			map.addControl(htmlLegend_risk);
 			if($('#cb-precip').prop("checked")){
+				if (layergroup_rain1 != undefined && map.hasLayer(layergroup_rain1)) {
+					map.removeLayer(layergroup_rain1)
+				}
+				if (layergroup_rain3 != undefined && map.hasLayer(layergroup_rain3)) {
+					map.removeLayer(layergroup_rain3)
+				}
+				if (layergroup_rain5 != undefined && map.hasLayer(layergroup_rain5)) {
+					map.removeLayer(layergroup_rain5)
+				}
 				getPrecipitation($('#risk-date').val());//后台查询数据库获取降雨信息
 			}
 
@@ -268,11 +285,11 @@ function getPrecipitation(date){
 			iconCreateFunction: function(cluster) {
 				return L.divIcon({ html: '<img src="img/rain5.png"></img>' });
 			}});
-		for (var i = 0; i < data.length; i++) {
+		for (let i = 0; i < data.length; i++) {
 			//在0.25*0.25格网里随机摆放
-			var lon = Math.random()*0.25 - 0.125 + data[i].lon;
-			var lat =  Math.random()*0.25 - 0.125 +data[i].lat;
-			var precip = data[i].precip;
+			let lon = Math.random()*0.25 - 0.125 + data[i].lon;
+			let lat =  Math.random()*0.25 - 0.125 +data[i].lat;
+			let precip = data[i].precip;
 			if(precip <20){
 				layergroup_rain1.addLayer(L.marker([lat, lon], {
 					icon:  L.icon({
@@ -719,7 +736,7 @@ function generateRiskChart(data) {
 				top:'20',    // 一下数值可为百分比也可为具体像素值
 				right:'10',
 				bottom:'20',
-				left:'40'
+				left:'30'
 			},
 			tooltip : {
 				trigger : 'axis',

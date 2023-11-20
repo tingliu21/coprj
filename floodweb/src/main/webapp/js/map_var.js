@@ -51,55 +51,6 @@ var layergroup_rain3;
 var layergroup_rain5;
 var layergroup_wts; //灾害事件
 // var DIST_STYLE;
-var lineOption={
-    title : {
-        left : 'center',
-        top : 0,
-    },
-    tooltip : {
-        trigger : 'axis',
-        axisPointer : {
-            type : 'cross',
-            crossStyle : {
-                color : '#999'
-            }
-        }
-    },
-    legend : {
-        top : 25,
-        //data : [ '省均值', '目标值' ],
-        left : 'center'
-
-    },
-    xAxis :  {
-        type : 'category',
-        //data : [ '2017', '2018', '2019', '2020' ]
-    } ,
-    yAxis : {
-        type : 'value',
-        name : '得分',
-        interval : 10,
-        min : 50,
-        max : 100,
-    } ,
-    series : [ {
-        type : 'line',
-        itemStyle: {
-            normal: {
-                color: '#EF4947'
-            }
-        },
-        label: {
-            normal: {
-                show: true,
-                position: 'top',
-                fontSize:'14px'
-            }
-
-        },
-
-    }]
-};
 
 function initVar() {
     LAYER_TDT_NORMAL = L.tileLayer.chinaProvider('TianDiTu.Normal.Map',{maxZoom:18,minZoom:3});
@@ -284,9 +235,18 @@ function initVar() {
 
     /* 在地图上任意双击则按经纬度查询风险值 */
     double_click = function (e) {
-        $.get( "rainflood/queryLocinundation?qdate=" + formatDate(new Date()) + "&num=3&clat=" + e.latlng.lat + "&clon=" + e.latlng.lng, function(data) {
+        if (map.hasLayer(queryLocationMarker)) {
+            map.removeLayer(queryLocationMarker);
+        }
+        queryLocationMarker = L.marker(L.latLng(e.latlng.lat,  e.latlng.lng)).addTo(map);
+        //如果左侧风险查询日期有值，就用风险查询的日期，否则用当天
+        let queryDate = formatDate(new Date());
+        if ($('#risk-date').val() != "") {
+            queryDate = $('#risk-date').val()
+        }
+        $.get( "rainflood/queryLocinundation?qdate=" + queryDate + "&num=3&clat=" + e.latlng.lat + "&clon=" + e.latlng.lng, function(data) {
             if (data.ok) {
-                $('#risk-query-date').val(formatDate(new Date()))
+                $('#risk-query-date').val(queryDate)
                 $('#risk-query-lon').text(e.latlng.lng)
                 $('#risk-query-lat').text(e.latlng.lat)
                 generateRiskChart(data.data)

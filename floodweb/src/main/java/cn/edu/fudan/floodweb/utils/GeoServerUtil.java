@@ -32,9 +32,10 @@ public class GeoServerUtil {
         fte.setTitle(tableName);
         fte.setName(tableName);
         fte.setSRS("EPSG:4326"); // srs=null?"EPSG:4326":srs);
-        //长三角区块的边界范围
-        fte.setNativeBoundingBox(115.875,24.875,122.533333307,33.125,"EPSG:4326");
-        fte.setLatLonBoundingBox(115.875,24.875,122.533333307,33.125,"EPSG:4326");
+        //长三角区块的边界范围lon：115.875-122.5，lat：24.875-33.125
+        //全国的边界范围lon：74-122.5，纬度18.25-53.5
+        fte.setNativeBoundingBox(74,18.25,122.533333307,53.5,"EPSG:4326");
+        fte.setLatLonBoundingBox(74,18.25,122.533333307,53.5,"EPSG:4326");
 
         GSLayerEncoder layerEncoder = new GSLayerEncoder();
         layerEncoder.setDefaultStyle("sde:inundation");
