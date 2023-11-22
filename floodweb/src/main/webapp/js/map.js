@@ -62,10 +62,10 @@ $(document).ready(function () {
 		stopLoading();
 	});
 
-    /* 人口聚合图层切换 */
-	$("#cb-ent").click(function (e) {
+	/* 降雨聚合图层切换 */
+	$("#cb-precip").click(function (e) {
 		startLoading();
-		toggleEntOverlay(e.target);
+		togglePrecipOverlay(e.target);
 		stopLoading();
 	});
 	/* 关闭风险查询对话框 */
@@ -302,39 +302,40 @@ function getPrecipitation(date){
 			iconCreateFunction: function(cluster) {
 				return L.divIcon({ html: '<img src="img/rain5.png"></img>' });
 			}});
-			for (let i = 0; i < data.length; i++) {
-				//在0.25*0.25格网里随机摆放
-				let lon = Math.random()*0.25 - 0.125 + data[i].lon;
-				let lat =  Math.random()*0.25 - 0.125 +data[i].lat;
-				let precip = data[i].precip;
-				if(precip <20){
-					layergroup_rain1.addLayer(L.marker([lat, lon], {
-						icon:  L.icon({
-							iconUrl: 'img/rain1.png',
-							iconSize: [32, 32],
-						})
-					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
-				}else if(precip <180){
-					layergroup_rain3.addLayer(L.marker([lat, lon], {
-						icon:  L.icon({
-							iconUrl: 'img/rain1.png',
-							iconSize: [32, 32],
-						})
-					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
-				}else{
-					layergroup_rain5.addLayer(L.marker([lat, lon], {
-						icon:  L.icon({
-							iconUrl: 'img/rain1.png',
-							iconSize: [32, 32],
-						})
-					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
-				}
+		for (let i = 0; i < data.length; i++) {
+			//在0.25*0.25格网里随机摆放
+			let lon = Math.random()*0.25 - 0.125 + data[i].lon;
+			let lat =  Math.random()*0.25 - 0.125 +data[i].lat;
+			let precip = data[i].precip;
+			if(precip <20){
+				layergroup_rain1.addLayer(L.marker([lat, lon], {
+					icon:  L.icon({
+						iconUrl: 'img/rain1.png',
+						iconSize: [32, 32],
+					})
+				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+			}else if(precip <180){
+				layergroup_rain3.addLayer(L.marker([lat, lon], {
+					icon:  L.icon({
+						iconUrl: 'img/rain1.png',
+						iconSize: [32, 32],
+					})
+				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+			}else{
+				layergroup_rain5.addLayer(L.marker([lat, lon], {
+					icon:  L.icon({
+						iconUrl: 'img/rain1.png',
+						iconSize: [32, 32],
+					})
+				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
 			}
-			layergroup_rain1.addTo(map);
-			layergroup_rain3.addTo(map);
-			layergroup_rain5.addTo(map);
-		});
-	}
+
+		}
+		layergroup_rain1.addTo(map);
+		layergroup_rain3.addTo(map);
+		layergroup_rain5.addTo(map);
+	});
+}
 /**
  * 设置时间轴的时间列表，返回包括输入日期及其前三天后三天
  * @param midDate 输入日期
@@ -377,7 +378,7 @@ function formatDate2(date) {
 	m = m < 10 ? '0' + m : m;
 	let d = date.getDate();
 	d = d < 10 ? '0' + d : d;
-	return y + '' + m +''+ d;
+	return y + "" + m + "" + d;
 }
 /**
  * 格式化日期
@@ -620,13 +621,6 @@ function toggleOperationOverlay(overlay) {
 	}
 }
 
-function toggleEntOverlay(checkbox) {
-	if (checkbox.checked) {
-		layergroup_ent.addTo(map);
-	} else {
-		layergroup_ent.remove();
-	}
-}
 
 function togglePrecipOverlay(checkbox) {
 	if (checkbox.checked) {

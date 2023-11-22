@@ -132,7 +132,7 @@ public class FetchPrecipitationJob implements Job {
         String tableName ="inun_"+riskdate.toString("yyyyMMdd");
         boolean bExists = geoServerUtil.checkLayerIsExist("sde",tableName);
         if(!bExists){
-            return geoServerUtil.publishDBLayer("sde","floodweb",tableName,"sde:inundation");
+            return geoServerUtil.publishDBLayer("sde","flood",tableName,"sde:inundation");
         }else {
             return false;
         }
