@@ -1,7 +1,7 @@
 var WEB_PATH = "/floodweb";
 // var GEOSERVER_PATH="http://localhost:8088/geoserver/sde/wms";
 var GEOSERVER_PATH="https://ilab.fudan.edu.cn/geoserver/sde/wms";
-var GEOSERVER_PATH2="http://localhost:8088/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_";
+var GEOSERVER_PATH2="https://ilab.fudan.edu.cn/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_";
 var LAYER_TDT_NORMAL;
 var LAYER_TDT_NORMAL_ANNO;
 var LAYER_TDT_SATELLITE;
@@ -49,6 +49,10 @@ var double_click;
 var map_mousemove;
 var addbookmark_click;
 var layergroup_ent; //人口
+var layergroup_wts; //灾害事件
+var layergroup_rain1; //降雨聚合图
+var layergroup_rain3;
+var layergroup_rain5;
 var layergroup_wts; //灾害事件
 // var DIST_STYLE;
 

@@ -234,6 +234,15 @@ $(document).ready(function () {
 		if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
 			map.removeLayer(LAYER_RISK)
 		}
+		if (layergroup_rain1 != undefined && map.hasLayer(layergroup_rain1)) {
+			map.removeLayer(layergroup_rain1)
+		}
+		if (layergroup_rain3 != undefined && map.hasLayer(layergroup_rain3)) {
+			map.removeLayer(layergroup_rain3)
+		}
+		if (layergroup_rain5 != undefined && map.hasLayer(layergroup_rain5)) {
+			map.removeLayer(layergroup_rain5)
+		}
 	})
 
 	//设置当前城市
@@ -265,13 +274,13 @@ $(document).ready(function () {
 function changeDataTimeAxios(e) {
 	startLoading();
 	let d = new Date($('#risk-date').val().split("-")[0] + "-" + timeList[e.options.index].time)
-	TMS_LAYER = L.tileLayer(GEOSERVER_PATH2+formatDate2(d)+'@EPSG%3A900913@png/{z}/{x}/{y}.png',{
+	LAYER_RISK = L.tileLayer(GEOSERVER_PATH2+formatDate2(d)+'@EPSG%3A900913@png/{z}/{x}/{y}.png',{
 		tms: true
 	})
-	if (TMS_LAYER != undefined && map.hasLayer(TMS_LAYER)) {
-			map.removeLayer(TMS_LAYER)
+	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
+			map.removeLayer(LAYER_RISK)
 		}
-	map.addLayer(TMS_LAYER)
+	map.addLayer(LAYER_RISK)
 	stopLoading();
 
 }
@@ -619,6 +628,19 @@ function toggleEntOverlay(checkbox) {
 	}
 }
 
+function togglePrecipOverlay(checkbox) {
+	if (checkbox.checked) {
+		if(layergroup_rain1!=null){
+			layergroup_rain1.addTo(map);
+			layergroup_rain3.addTo(map);
+			layergroup_rain5.addTo(map);
+		}
+	} else {
+		layergroup_rain1.remove();
+		layergroup_rain3.remove();
+		layergroup_rain5.remove();
+	}
+}
 
 /**
  * 灾害事件

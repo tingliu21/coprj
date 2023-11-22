@@ -37,6 +37,15 @@ public class PrecipitationModule {
     @Inject
     protected GeoServerUtil geoServerUtil;
     @At
+    public Object querylite(@Param("day")String sDay){
+        if (sDay == null || sDay.equals("")) {
+            return null;
+        }
+        Cnd cnd = Cnd.where("p_time", "=", sDay);
+        List<Precipitation> precipList = dao.query(Precipitation.class, cnd);
+        return precipList;
+    }
+    @At
     public void getCityPrecip() {
         //查询得到城市locationid
         Sql citySql= Sqls.create("select distinct locid from dd_studyarea");
