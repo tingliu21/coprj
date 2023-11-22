@@ -277,6 +277,7 @@ function changeDataTimeAxios(e) {
 	LAYER_RISK = L.tileLayer(GEOSERVER_PATH2+formatDate2(d)+'@EPSG%3A900913@png/{z}/{x}/{y}.png',{
 		tms: true
 	})
+	console.log(LAYER_RISK)
 	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
 			map.removeLayer(LAYER_RISK)
 		}
