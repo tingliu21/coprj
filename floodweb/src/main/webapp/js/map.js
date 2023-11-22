@@ -23,7 +23,7 @@ $(document).ready(function () {
     map.on("dblclick", double_click);
 
     /* 图例控件 */
-    map.addControl(htmlLegend_risk);
+    // map.addControl(htmlLegend_risk);
     map.addControl(htmlLegend_soil);
     map.addControl(htmlLegend_landuse);
 	map.addControl(htmlLegend_water);
@@ -68,7 +68,12 @@ $(document).ready(function () {
 		toggleEntOverlay(e.target);
 		stopLoading();
 	});
-
+	/* 关闭风险查询对话框 */
+	$("#riskInfoModal").on('hide.bs.modal',function (e) {
+		if (map.hasLayer(queryLocationMarker)) {
+			map.removeLayer(queryLocationMarker);
+		}
+	});
 
 	/* 显示灾害事件 */
 	$("#cb-wts").click(function (e) {
@@ -199,17 +204,27 @@ $(document).ready(function () {
 
 	// 查询灾害风险图
 	$('#btn-risk-search').click(function () {
-
-
 		if ($('#risk-date').val() != "") {
-			$(".timeline").show()
-			// startLoading();
-			let d = new Date($('#risk-date').val()); //用户填写的日期
+			map.addControl(htmlLegend_risk);
+			if($('#cb-precip').prop("checked")){
+				if (layergroup_rain1 != undefined && map.hasLayer(layergroup_rain1)) {
+					map.removeLayer(layergroup_rain1)
+				}
+				if (layergroup_rain3 != undefined && map.hasLayer(layergroup_rain3)) {
+					map.removeLayer(layergroup_rain3)
+				}
+				if (layergroup_rain5 != undefined && map.hasLayer(layergroup_rain5)) {
+					map.removeLayer(layergroup_rain5)
+				}
+				getPrecipitation($('#risk-date').val());//后台查询数据库获取降雨信息
+			}
+
+			$(".timeline").show();
+			let d = new Date($('#risk-date').val()); //用户填写的日
 			timeList = setTimeList(d) //得到连续7天的日期
 			timeAxioParam.data = timeList //设置时间轴
 			oTimeAxiosFun = new oTimeAxios(timeAxioParam, function () { changeDataTimeAxios(this) });
 			// $('#btnPlay').show();
-			// stopLoading();
 		}
 	})
 	//重置查询灾害风险图
@@ -257,27 +272,60 @@ function changeDataTimeAxios(e) {
 			map.removeLayer(TMS_LAYER)
 		}
 	map.addLayer(TMS_LAYER)
-	// LAYER_RISK = L.tileLayer.wms(GEOSERVER_PATH, {
-	// 				layers: "inun_"+formatDate2(d),
-	// 				format: 'image/png',
-	// 				transparent: true,
-	// 				KeepBuffer:10,
-	// 				tileSize:2048
-	// 			});
-	// console.log(formatDate2(d));
-	// console.log(LAYER_RISK != undefined, map.hasLayer(LAYER_RISK), LAYER_RISK != undefined && map.hasLayer(LAYER_RISK));
-	// if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
-	// 	map.removeLayer(LAYER_RISK)
-	// 	console.log('1')
-	// }
-	//
-	// map.addLayer(LAYER_RISK)
 	stopLoading();
-	// var tms_ne = L.tileLayer('http://localhost:8088/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_20231108@EPSG%3A900913@png/{z}/{x}/{y}.png', {
-	// 	tms: true
-	// }).addTo(map);
-}
 
+}
+function getPrecipitation(date){
+	/* 以聚合方式加载所有降雨点 */
+	$.get("precip/querylite?day="+date, function(data) {
+		layergroup_rain1 = L.markerClusterGroup({
+			showCoverageOnHover:true,
+			iconCreateFunction: function(cluster) {
+				return L.divIcon({ html: '<img src="img/rain1.png"></img>' });
+			}});
+		layergroup_rain3 = L.markerClusterGroup({
+			showCoverageOnHover:true,
+			iconCreateFunction: function(cluster) {
+				return L.divIcon({ html: '<img src="img/rain3.png"></img>' });
+			}});
+		layergroup_rain5 = L.markerClusterGroup({
+			showCoverageOnHover:true,
+			iconCreateFunction: function(cluster) {
+				return L.divIcon({ html: '<img src="img/rain5.png"></img>' });
+			}});
+			for (let i = 0; i < data.length; i++) {
+				//在0.25*0.25格网里随机摆放
+				let lon = Math.random()*0.25 - 0.125 + data[i].lon;
+				let lat =  Math.random()*0.25 - 0.125 +data[i].lat;
+				let precip = data[i].precip;
+				if(precip <20){
+					layergroup_rain1.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain1.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}else if(precip <180){
+					layergroup_rain3.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain1.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}else{
+					layergroup_rain5.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain1.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}
+			}
+			layergroup_rain1.addTo(map);
+			layergroup_rain3.addTo(map);
+			layergroup_rain5.addTo(map);
+		});
+	}
 /**
  * 设置时间轴的时间列表，返回包括输入日期及其前三天后三天
  * @param midDate 输入日期
@@ -689,7 +737,7 @@ function generateRiskChart(data) {
 				top:'20',    // 一下数值可为百分比也可为具体像素值
 				right:'10',
 				bottom:'20',
-				left:'40'
+				left:'30'
 			},
 			tooltip : {
 				trigger : 'axis',
