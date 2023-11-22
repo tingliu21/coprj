@@ -1,0 +1,90 @@
+/*
+获取所有企业源地点以生成Heatmap
+*/
+/* sql_get_all_ent */
+SELECT lon, lat FROM t_ent
+
+/* sql_get_ent_by_region */
+SELECT lon, lat FROM t_ent WHERE county=@region
+
+/*
+获取所有企业源的VOC排放量以生成Heatmap
+*/
+/* sql_get_vocs */
+select t1.lon, t1.lat, round(t2."vocs_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id
+
+/* sql_get_vocs_by_region */
+select t1.lon, t1.lat, round(t2."vocs_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id and county=@region
+
+/*
+获取所有企业源的SO2排放量以生成Heatmap
+*/
+/* sql_get_so2 */
+select t1.lon, t1.lat, round(t2."so2_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id
+
+/* sql_get_so2_by_region */
+select t1.lon, t1.lat, round(t2."so2_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id and county=@region
+
+/*
+获取所有企业源的NOx排放量以生成Heatmap
+*/
+/* sql_get_nox */
+select t1.lon, t1.lat, round(t2."nox_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id
+
+/* sql_get_nox_by_region */
+select t1.lon, t1.lat, round(t2."nox_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id and county=@region
+
+/*
+获取所有企业源的dust排放量以生成Heatmap
+*/
+/* sql_get_dust */
+select t1.lon, t1.lat, round(t2."dust_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id
+
+/* sql_get_dust_by_region */
+select t1.lon, t1.lat, round(t2."dust_yearly") as count from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id and county=@region
+
+/*
+获取所有市政源地点以生成Heatmap
+*/
+/* sql_get_all_gov */
+SELECT lon, lat FROM t_gd UNION ALL SELECT lon, lat FROM t_sps UNION ALL SELECT lon, lat FROM t_stp UNION ALL SELECT lon, lat FROM t_wts
+
+/*
+获取所有重点企业地点以生成Heatmap
+*/
+/* sql_get_all_key */
+SELECT t1.lon, t1.lat FROM t_ent t1, t_ent_key t2 WHERE t1.ent_credit_code = t2.ent_id
+
+/*
+获取各县市企业数量
+*/
+/* sql_count_ent */
+select count(*) as count, county from t_ent group by county
+
+/*
+获取各县市市政源数量
+*/
+/* sql_count_gov */
+select sum(cnt) as count,county from (select 1 as cnt, ad_name as county from t_gd union all select 1 as count, sps_region as county from t_sps union all select 1 as count, stp_region as county from t_stp union all select 1 as count, wts_region as county from t_wts) as view1 group by county
+
+/*
+获取各县市重点企业数量
+*/
+/* sql_count_key */
+select count(*) as count, t1county as county from (select t1.county as t1county from t_ent t1, t_ent_key t2 where t1.ent_credit_code = t2.ent_id) as view group by county
+
+/*
+获取各个区县企业源、市政源、重点企业数量统计信息
+*/
+/* sql_stat_source */
+select t1.county, t1.count1, t2.count2, t3.count3 from (select count(*) as count1, county from t_ent group by county) as t1
+join (select sum(cnt) as count2,county from (select 1 as cnt, ad_name as county from t_gd union all select 1 as count, sps_region as county from t_sps union all select 1 as count, stp_region as county from t_stp union all select 1 as count, wts_region as county from t_wts) as view1 group by county) as t2
+on t1.county = t2.county
+left join (select count(*) as count3, t1county as county from (select t1.county as t1county from t_ent t1, t_ent_key t2 where t1.ent_credit_code = t2.ent_id) as view group by county) as t3
+on t1.county = t3.county
+
+/*
+获取各个区县污染物排放量
+*/
+/* sql_stat_emission */
+select round(sum("vocs_yearly")) as vocs, round(sum("so2_yearly")) as so2, round(sum("nox_yearly")) as nox, round(sum("dust_yearly")) as dust, county from (select * from t_ent t1, t_ent_sewage t2 where t1.ent_credit_code = t2.ent_id) as tt group by county

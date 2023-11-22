@@ -1,0 +1,56 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+  <display-name>floodweb</display-name>
+  <filter>
+    <filter-name>nutz</filter-name>
+    <filter-class>org.nutz.mvc.NutFilter</filter-class>
+    <init-param>
+      <param-name>modules</param-name>
+      <param-value>cn.edu.fudan.floodweb.MainModule</param-value>
+    </init-param>
+    <init-param>
+      <param-name>exclusions</param-name>
+      <!-- *.XXX 忽略后缀 -->
+      <!-- /XX/* 忽略前缀 -->
+      <!-- /cc   忽略固定路径 -->
+      <!-- 下面的例子忽略了html和ftl后缀, 忽略了/rs/和/druid/前缀,和忽略了固定路径/abc/notaction -->
+      <param-value>*.html,*.css,*.js,*.png,*.jpg,*.ftl,/rs/*,/druid/*,/abc/notaction</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>nutz</filter-name>
+    <url-pattern>/*</url-pattern>
+    <!-- ForwardView需要下面的配置 @Ok("->:/xxx/yyy/zzz") -->
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>
+<!--
+<filter>和<filter-name>：定义了一个过滤器，并指定了过滤器的名称为"nutz"。
+
+<filter-class>：指定了过滤器的Java类为"org.nutz.mvc.NutFilter"，表示该过滤器使用Nutz MVC框架。
+
+<init-param>和<param-name>：定义了过滤器的初始化参数。
+
+<param-value>：指定了过滤器的初始化参数值，包括"modules"和"exclusions"。"modules"参数指定了应用程序使用的Nutz模块，"exclusions"参数指定了需要忽略的URL模式。
+
+<filter-mapping>和<filter-name>：定义了过滤器的映射，将过滤器"nutz"映射到所有的URL。
+
+<url-pattern>：指定了过滤器映射的URL模式为"/*"，表示所有的URL都会经过该过滤器。
+
+<dispatcher>：指定了过滤器的调度方式，包括"REQUEST"、"FORWARD"和"INCLUDE"。这表示过滤器会在请求、转发和包含操作中被调用。
+
+<welcome-file-list>和<welcome-file>：定义了欢迎文件列表，指定了默认的欢迎文件为"index.html"。
+
+这段代码的作用是配置一个名为"floodweb"的Java Web应用程序，使用Nutz MVC框架进行请求过滤和处理。过滤器"nutz"将会处理所有的URL请求，并根据指定的参数进行相应的操作。同时，它还配置了默认的欢迎文件为"index.html"。
+-->
