@@ -97,20 +97,28 @@ public class PrecipitationModule {
     }
 
     @At
-    public void batchPublishGL(@Param("sdate")String begin,@Param("edate")String end) {
+    public List<String> batchPublishGL(@Param("sdate")String begin,@Param("edate")String end) {
         DateTime dtStart = DateTime.parse(begin);
         DateTime dtStop = DateTime.parse(end);
         int times = Days.daysBetween(dtStart,dtStop).getDays();
+        List<String> results = new ArrayList<>(times);
         for(int i=0;i<times;i++){
             DateTime ptime = dtStart.plusDays(i);
             String tableName ="inun_"+ptime.toString("yyyyMMdd");
             boolean bExists = geoServerUtil.checkLayerIsExist("sde",tableName);
             if(!bExists){
                 if(geoServerUtil.publishDBLayer("sde","flood",tableName,"sde:inundation")){
+                    results.add(tableName+"洪涝风险图发布成功！");
                     System.out.println(tableName+"洪涝风险图发布成功！");
+                }else{
+                    results.add(tableName+"洪涝风险图发布不成功！");
                 }
+            }else{
+                results.add(tableName+"已经在GeoServer服务器中！");
             }
         }
+        return results;
+
     }
     private List<Integer> getCityLocation(ResultSet rs) throws SQLException {
         List<Integer> list = new ArrayList<>();

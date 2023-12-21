@@ -254,6 +254,11 @@ $(document).ready(function () {
  */
 function changeDataTimeAxios(e) {
 	let d = new Date($('#risk-date').val().split("-")[0] + "-" + timeList[e.options.index].time)
+	//先删除上一个日期的风险图
+	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
+		map.removeLayer(LAYER_RISK)
+	}
+	//重新加载新日期的风险图
 	LAYER_RISK = L.tileLayer.wms(GEOSERVER_PATH, {
 					layers: "inun_"+formatDate2(d),
 					 format: 'image/png',
@@ -261,10 +266,6 @@ function changeDataTimeAxios(e) {
 					KeepBuffer:10,
 					tileSize:2048
 				});
-	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
-		map.removeLayer(LAYER_RISK)
-	}
-
 	map.addLayer(LAYER_RISK)
 }
 function getPrecipitation(date){
@@ -290,28 +291,31 @@ function getPrecipitation(date){
 			let lon = Math.random()*0.25 - 0.125 + data[i].lon;
 			let lat =  Math.random()*0.25 - 0.125 +data[i].lat;
 			let precip = data[i].precip;
-			if(precip <20){
-				layergroup_rain1.addLayer(L.marker([lat, lon], {
-					icon:  L.icon({
-						iconUrl: 'img/rain1.png',
-						iconSize: [32, 32],
-					})
-				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
-			}else if(precip <180){
-				layergroup_rain3.addLayer(L.marker([lat, lon], {
-					icon:  L.icon({
-						iconUrl: 'img/rain1.png',
-						iconSize: [32, 32],
-					})
-				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
-			}else{
-				layergroup_rain5.addLayer(L.marker([lat, lon], {
-					icon:  L.icon({
-						iconUrl: 'img/rain1.png',
-						iconSize: [32, 32],
-					})
-				}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+			if(precip>=2.0){//降雨量>=2mm才显示降雨图标
+				if(precip <20){
+					layergroup_rain1.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain1.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}else if(precip <180){
+					layergroup_rain3.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain3.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}else{
+					layergroup_rain5.addLayer(L.marker([lat, lon], {
+						icon:  L.icon({
+							iconUrl: 'img/rain5.png',
+							iconSize: [32, 32],
+						})
+					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
+				}
 			}
+
 
 		}
 		layergroup_rain1.addTo(map);
@@ -424,173 +428,6 @@ function getLonLat(searchText) {
         return null;
     }
 }
-
-/**
- * 查询土壤数据信息
- * @param e
- * @returns
- */
-function identifyEnvFuncZone(e) {
-	$.get(WEB_PATH + "/log/add?source=web&op=查询土壤数据",function(){});
-	$.get(WEB_PATH + "/map/query?layer=1&region=" + REGION_CODE_NAME[authority] + "&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng, function(data) {
-		if (data.ok) {
-			// 高亮
-			highlightLayer.clearLayers();
-			var jdata = JSON.parse(data.data);
-			highlightLayer.addData(jdata);
-			
-			// 显示气泡
-			if (map.hasLayer(queryLocationMarker)) {
-	            map.removeLayer(queryLocationMarker);
-	        }
-	        queryLocationMarker = L.marker(e.latlng).addTo(map);
-	        
-	        // 显示查询结果
-	        var content;
-	        if (jdata.features.length == 0) {
-	        	content = "该处无结果";
-	        } else {
-	        	content = "<p>编号：" + jdata.features[0].properties.编号 + "</p><p>名称：" + jdata.features[0].properties.名称 + "</p>"
-        				+ "<p>功能区类型：" + jdata.features[0].properties.功能区类型 + "</p>"
-        				+ "<p><button class='view-detail-env' id='view-detail-env' data='" + JSON.stringify(jdata.features[0].properties) + "'>查看详细</button></p>";
-	        }
-	        queryLocationMarker.bindPopup(content).openPopup();
-	        
-	        $('.view-detail-env').click(function() {
-	        	var info = JSON.parse($(this).attr('data'));
-	        	$('#info-env-id').html(info.编号);
-	        	$('#info-env-name').html(info.名称);
-	        	$('#info-env-number').html(info.土壤区序号);
-	        	$('#info-env-type').html(info.土壤类型);
-	        	$('#info-env-district').html(info.行政区);
-	        	$('#envFuncZoneInfoModal').modal('show');
-	        });
-		} else {
-			alert(data.msg)
-		}
-		
-	});
-}
-
-/**
- * 查询河湖水系分布信息
- * @param e
- * @returns
- */
-function identifyDringkingWaterSource(e) {
-	$.get(WEB_PATH + "/log/add?source=web&op=查询河湖水系分布",function(){});
-	$.get(WEB_PATH + "/map/query?layer=2&region=" + REGION_CODE_NAME[authority] + "&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng, function(data) {
-		if (data.ok) {
-			// 高亮
-			highlightLayer.clearLayers();
-			var jdata = JSON.parse(data.data);
-			highlightLayer.addData(jdata);
-			
-			// 显示气泡
-			if (map.hasLayer(queryLocationMarker)) {
-	            map.removeLayer(queryLocationMarker);
-	        }
-	        queryLocationMarker = L.marker(e.latlng).addTo(map);
-	        
-	        // 显示查询结果
-	        var content;
-	        if (jdata.features.length == 0) {
-	        	content = "该处无结果";
-	        } else {
-	        	content = "<p>水源地名称：" + jdata.features[0].properties.水源地名称 + "</p><p>功能名称：" + jdata.features[0].properties.功能名称 + "</p>"
-        				+ "<p>行政区划：" + jdata.features[0].properties.行政区划 + "</p>"
-        				+ "<p><button class='view-detail-water' data='" + JSON.stringify(jdata.features[0].properties) + "'>查看详细</button></p>";
-	        }
-	        queryLocationMarker.bindPopup(content).openPopup();
-	        
-	        $('.view-detail-water').click(function() {
-	        	var info = JSON.parse($(this).attr('data'));
-	        	$('#info-water-name').html(info.水源地名称);
-	        	$('#info-water-func').html(info.功能名称);
-	        	$('#info-water-district').html(info.行政区划);
-	        	$('#info-water-type').html(info.功能类型);
-	        	$('#info-water-measure').html(info.管控措施);
-	        	$('#drinkingWaterSourceInfoModal').modal('show');
-	        });
-		} else {
-			alert(data.msg)
-		}
-		
-	});
-}
-
-/**
- * 查询内涝分布信息
- * @param e
- * @returns
- */
-function identifyEcoRedLine(e) {
-	$.get(WEB_PATH + "/log/add?source=web&op=查询内涝分布",function(){});
-	$.get(WEB_PATH + "/map/query?layer=3&region="+ REGION_CODE_NAME[authority] + "&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng, function(data) {
-		if (data.ok) {
-			// 高亮
-			highlightLayer.clearLayers();
-			var jdata = JSON.parse(data.data);
-			highlightLayer.addData(jdata);
-
-			// 显示气泡
-			if (map.hasLayer(queryLocationMarker)) {
-	            map.removeLayer(queryLocationMarker);
-	        }
-	        queryLocationMarker = L.marker(e.latlng).addTo(map);
-	        
-	        // 显示查询结果
-	        var content;
-	        if (jdata.features.length == 0) {
-	        	content = "该处无结果";
-	        } else {
-	        	content = "<p>编号：" + jdata.features[0].properties.XQBH + "</p><p>名称：" + jdata.features[0].properties.XQMC + "</p>"
-        				+ "<p>类型：" + jdata.features[0].properties.类型 + "</p><p>行政区：" + jdata.features[0].properties.行政区 + "</p>";
-	        }
-	        queryLocationMarker.bindPopup(content).openPopup();
-		} else {
-			alert(data.msg)
-		}
-		
-	});
-}
-
-/**
- * 查询土地利用
- * @param e
- * @returns
- */
-function identifySxyd(e) {
-	$.get(WEB_PATH + "/log/add?source=web&op=查询土地利用",function(){});
-	$.get(WEB_PATH + "/map/query?region=" + REGION_CODE_NAME[authority] + "&layer=4&lat=" + e.latlng.lat + "&lon=" + e.latlng.lng, function(data) {
-		if (data.ok) {
-			// 高亮
-			highlightLayer.clearLayers();
-			var jdata = JSON.parse(data.data);
-			highlightLayer.addData(jdata);
-
-			// 显示气泡
-			if (map.hasLayer(queryLocationMarker)) {
-				map.removeLayer(queryLocationMarker);
-			}
-			queryLocationMarker = L.marker(e.latlng).addTo(map);
-
-			// 显示查询结果
-			var content;
-			if (jdata.features.length == 0) {
-				content = "该处无结果";
-			} else {
-				content = "<p>编号：" + jdata.features[0].properties.HJGKDYBM + "</p><p>名称：" + jdata.features[0].properties.HJGKDYMC + "</p>"
-					+ "<p>行政区：" + jdata.features[0].properties.COUNTY + "</p><p>类型：" + jdata.features[0].properties.REMARKS + "</p>";
-			}
-			queryLocationMarker.bindPopup(content).openPopup();
-		} else {
-			alert(data.msg)
-		}
-
-	});
-}
-
 
 /**
  * 切换业务图层

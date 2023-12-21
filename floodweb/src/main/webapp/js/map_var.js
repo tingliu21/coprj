@@ -59,7 +59,7 @@ function initVar() {
     LAYER_TDT_SATELLITE_ANNO = L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion',{maxZoom:18,minZoom:3});
     LAYER_TDT_TERRAIN = L.tileLayer.chinaProvider('TianDiTu.Terrain.Map', {maxZoom:18,minZoom:3});
     LAYER_TDT_TERRAIN_ANNO = L.tileLayer.chinaProvider('TianDiTu.Terrain.Annotion', {maxZoom:18,minZoom:3});
-    // LAYER_TZBOUNDARY = getBoundaryLayer();
+
     LAYER_SOIL = getSoilLayer();
     LAYER_DEMTOPP=getDEMLayer();
     LAYER_WATER = getWaterLayer();
