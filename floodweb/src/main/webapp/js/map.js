@@ -264,7 +264,8 @@ function changeDataTimeAxios(e) {
 					 format: 'image/png',
 					transparent: true,
 					KeepBuffer:10,
-					tileSize:2048
+					tileSize:2048,
+					zIndex:999
 				});
 	map.addLayer(LAYER_RISK)
 }

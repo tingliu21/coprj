@@ -12,7 +12,7 @@ function getSoilLayer() {
 }
 
 /**
- * DEM
+ * DEM,暂无
  * @returns {*}
  */
 function getDEMLayer(){
@@ -30,16 +30,11 @@ function getWaterLayer() {
 }
 
 /**
- * 根据区县获取内涝分布图层
+ * 根据区县获取内涝分布图层,暂无
  * @returns {*}
  */
 function getFloodLayer() {
-    var layer;
-    if (authority == "331000") {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EcoRedline/MapServer"});
-    } else {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EcoRedline_" + REGION_CODE_ACRONYM[authority] + "/MapServer"});
-    }
+    var layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EcoRedline/MapServer"});
     return layer;
 }
 
