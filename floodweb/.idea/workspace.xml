@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="42436dcb-e338-4a27-a81b-cc774a2bff37" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/custom/cron.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/custom/cron.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ioc/dao.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ioc/dao.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/leaflet.ChineseTmsProviders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/leaflet.ChineseTmsProviders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/map_region.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/map_region.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/Maven/apache-maven-3.6.3" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="#JAVA_HOME" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2Pv8oTVzCjXsZvbM7jdHuwb8lvi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;jyw&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/项目代码/coprj-master/coprj-master/floodweb&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;profiler.jvm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="JarApplication" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/floodweb/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="42436dcb-e338-4a27-a81b-cc774a2bff37" name="变更" comment="" />
+      <created>1684326372547</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684326372547</updated>
+      <workItem from="1684326373723" duration="186000" />
+      <workItem from="1691562684905" duration="77000" />
+      <workItem from="1691733893394" duration="253000" />
+      <workItem from="1691742337037" duration="314000" />
+      <workItem from="1691742665194" duration="1097000" />
+      <workItem from="1691820641381" duration="1812000" />
+      <workItem from="1691905423803" duration="648000" />
+      <workItem from="1691916992028" duration="3497000" />
+      <workItem from="1691974981333" duration="7706000" />
+      <workItem from="1692068290592" duration="6910000" />
+      <workItem from="1692087042203" duration="1767000" />
+      <workItem from="1692089059973" duration="2623000" />
+      <workItem from="1692096023050" duration="599000" />
+      <workItem from="1692149521543" duration="11428000" />
+      <workItem from="1692236516071" duration="6397000" />
+      <workItem from="1692261089807" duration="4282000" />
+      <workItem from="1692322567503" duration="7036000" />
+      <workItem from="1692580004014" duration="8075000" />
+      <workItem from="1692596355643" duration="1257000" />
+      <workItem from="1692598714112" duration="704000" />
+      <workItem from="1692599500415" duration="13242000" />
+      <workItem from="1692667372598" duration="12850000" />
+      <workItem from="1692755203449" duration="22571000" />
+      <workItem from="1692839651120" duration="2776000" />
+      <workItem from="1692857089171" duration="2979000" />
+      <workItem from="1692926894287" duration="29000" />
+      <workItem from="1692926935320" duration="17974000" />
+      <workItem from="1693186985366" duration="7625000" />
+      <workItem from="1693277140411" duration="3220000" />
+      <workItem from="1693359824992" duration="4433000" />
+      <workItem from="1693445776261" duration="488000" />
+      <workItem from="1693446285617" duration="24000" />
+      <workItem from="1693446326683" duration="2670000" />
+      <workItem from="1693469056987" duration="317000" />
+      <workItem from="1693531848104" duration="3527000" />
+      <workItem from="1694160085005" duration="1099000" />
+      <workItem from="1700534081831" duration="2543000" />
+      <workItem from="1700536642097" duration="523000" />
+      <workItem from="1700537298974" duration="2352000" />
+      <workItem from="1700554825304" duration="1468000" />
+      <workItem from="1700556859634" duration="1252000" />
+      <workItem from="1700618676079" duration="290000" />
+      <workItem from="1700618974243" duration="1023000" />
+      <workItem from="1700620023726" duration="976000" />
+      <workItem from="1700622739883" duration="222000" />
+      <workItem from="1700623015708" duration="8084000" />
+      <workItem from="1700640501434" duration="1912000" />
+      <workItem from="1700642764996" duration="7638000" />
+      <workItem from="1700654473352" duration="235000" />
+      <workItem from="1700654720108" duration="752000" />
+      <workItem from="1701138673872" duration="11000" />
+      <workItem from="1701139078147" duration="34000" />
+      <workItem from="1701139125837" duration="370000" />
+      <workItem from="1701139506573" duration="3482000" />
+      <workItem from="1701495962477" duration="7644000" />
+      <workItem from="1701857359145" duration="19000" />
+      <workItem from="1702175257950" duration="792000" />
+      <workItem from="1702187510809" duration="619000" />
+      <workItem from="1702265683709" duration="1466000" />
+      <workItem from="1702275384794" duration="226000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

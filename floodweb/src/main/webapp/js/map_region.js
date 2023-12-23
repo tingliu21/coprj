@@ -79,12 +79,7 @@ function getBoundaryLayer() {
  * @returns {*}
  */
 function getSoilLayer() {
-    var layer;
-    if (authority == "331000") {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EnvFuncZone/MapServer"});
-    } else {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/EnvFuncZone_" + REGION_CODE_ACRONYM[authority] + "/MapServer"});
-    }
+    var layer= L.esri.dynamicMapLayer({url: "https://ilab.fudan.edu.cn/arcgis/rest/services/Soil/MapServer"});
     return layer;
 }
 
@@ -101,12 +96,8 @@ function getDEMLayer(){
  * @returns {*}
  */
 function getWaterLayer() {
-    var layer;
-    if (authority == "331000") {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/DrinkingWaterSource/MapServer"});
-    } else {
-        layer = L.esri.dynamicMapLayer({url: "http://127.0.0.1/arcgis/rest/services/DrinkingWaterSource_" + REGION_CODE_ACRONYM[authority] + "/MapServer"});
-    }
+    var layer= L.esri.dynamicMapLayer({url: "https://ilab.fudan.edu.cn/arcgis/rest/services/River/MapServer"});
+
     return layer;
 }
 
@@ -129,11 +120,11 @@ function getFloodLayer() {
  * @returns {*}
  */
 function getLanduseLayer() {
-    var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
-    return wmsLayer;
+    var layer= L.esri.dynamicMapLayer({url: "https://ilab.fudan.edu.cn/arcgis/rest/services/Landuse/MapServer"});
+    return layer;
 }
 
 function getPopLayer() {
-    var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/nurc/wms?',{layers:'nurc:mosaic'});
-    return wmsLayer;
+    var layer= L.esri.dynamicMapLayer({url: "https://ilab.fudan.edu.cn/arcgis/rest/services/Pop/MapServer"});
+    return layer;
 }
