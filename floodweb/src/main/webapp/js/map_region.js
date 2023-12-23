@@ -1,7 +1,4 @@
 
-var authority = "";
-
-
 /**
  * 根据区县获取土壤分布图层
  * @returns {*}

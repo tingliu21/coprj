@@ -7,11 +7,11 @@ var LAYER_TDT_SATELLITE;
 var LAYER_TDT_SATELLITE_ANNO;
 var LAYER_TDT_TERRAIN;
 var LAYER_TDT_TERRAIN_ANNO;
-// var LAYER_TZBOUNDARY;
+
 var LAYER_SOIL; //土壤数据图层
-var LAYER_DEMTOPP; //DEM图层
+var LAYER_DEMTOPP; //DEM图层，暂无
 var LAYER_WATER;   //河湖水系图层
-var LAYER_FLOOD;   //内涝图层
+var LAYER_FLOOD;   //内涝图层，暂无
 var LAYER_LANDUSE; //土地利用
 var LAYER_POP; //人口密度
 
@@ -37,7 +37,7 @@ var htmlLegend_risk;
 var htmlLegend_soil;
 var htmlLegend_landuse;
 var htmlLegend_water;
-var htmlLegend_flood;
+var htmlLegend_flood;//暂无
 var htmlLegend_pop;
 
 // var sidebar_bookmark;
@@ -45,7 +45,6 @@ var sidebar;
 var normal_click;
 var double_click;
 var map_mousemove;
-var addbookmark_click;
 var layergroup_rain1; //降雨聚合图
 var layergroup_rain3;
 var layergroup_rain5;
@@ -61,9 +60,9 @@ function initVar() {
     LAYER_TDT_TERRAIN_ANNO = L.tileLayer.chinaProvider('TianDiTu.Terrain.Annotion', {maxZoom:18,minZoom:3});
 
     LAYER_SOIL = getSoilLayer();
-    LAYER_DEMTOPP=getDEMLayer();
+    // LAYER_DEMTOPP=getDEMLayer();
     LAYER_WATER = getWaterLayer();
-    LAYER_FLOOD = getFloodLayer();
+    // LAYER_FLOOD = getFloodLayer();
     LAYER_LANDUSE = getLanduseLayer();
     LAYER_POP = getPopLayer();
 
@@ -83,7 +82,7 @@ function initVar() {
         "landuse": LAYER_LANDUSE,
         "soil": LAYER_SOIL,
         "water": LAYER_WATER,
-        "flood": LAYER_FLOOD,
+        // "flood": LAYER_FLOOD,
         "pop": LAYER_POP
         // "dem":LAYER_DEMTOPP
     };
