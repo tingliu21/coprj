@@ -27,7 +27,7 @@ $(document).ready(function () {
     map.addControl(htmlLegend_soil);
     map.addControl(htmlLegend_landuse);
 	map.addControl(htmlLegend_water);
-	map.addControl(htmlLegend_flood);
+	// map.addControl(htmlLegend_flood);
 	map.addControl(htmlLegend_pop);
 
 	chartline = echarts.init(document.getElementById('risk-chart'));
@@ -64,10 +64,10 @@ $(document).ready(function () {
 	});
 
 
-	/* 显示灾害事件 */
-	$("#cb-wts").click(function (e) {
-		toggleWtsOverlay(e.target);
-	});
+	/* 显示灾害事件，暂无 */
+	// $("#cb-wts").click(function (e) {
+	// 	toggleWtsOverlay(e.target);
+	// });
 
 	/* 关闭风险查询对话框 */
 	$("#riskInfoModal").on('hide.bs.modal',function (e) {
@@ -226,17 +226,17 @@ $(document).ready(function () {
 		}
 	})
 
-	//设置当前城市
-	$('#current_region').click(function (){
-		$('#setRegionModal').modal('show')
-	})
+	// //设置当前城市，暂无
+	// $('#current_region').click(function (){
+	// 	$('#setRegionModal').modal('show')
+	// })
 
 	//查询风险
 	$('#risk-query-date').change(function () {
 		let lon = $('#risk-query-lon').text()
 		let lat = $('#risk-query-lat').text()
 		let date = $('#risk-query-date').val()
-		$.get("rainflood/queryLocinundation?qdate=" + date + "&num=15&clat=" + lat + "&clon=" + lon, function(data) {
+		$.get("rainflood/queryLocinundation?qdate=" + date + "&num=3&clat=" + lat + "&clon=" + lon, function(data) {
 			if (data.ok) {
 				generateRiskChart(data.data)
 			} else {
