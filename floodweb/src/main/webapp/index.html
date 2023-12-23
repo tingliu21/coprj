@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/timeAxis.css" />
     <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/loading.css" />
 
 
     <script src="js/leaflet.js"></script>
@@ -42,6 +43,7 @@
 
     <script src="js/bootstrap.min.js"></script>
 
+
     <script src="js/jsgrid.min.js"></script>
     <script src="js/timeAxis.js"></script>
     <script src="js/bootstrap-datepicker.min.js"></script>
@@ -59,23 +61,22 @@
 </head>
 <body>
 
-<div class="parent">
-
+<div class="parent" >
     <div id="header" class="top">
         <span id="logo"><i class="fas fa-fan"></i></span><span id="title">洪涝灾害风险评估管理系统</span>
-<!--        <div id="div-current_region">当前区域：<span id="current_region">杭州市</span></div>-->
-<!--        <img id="logo" src="img/logo.png">-->
-<!--        <div id="welcome">欢迎您：<!=session.getAttribute("me") > <a href="user/logout" class="fa fa-sign-out-alt" style="color: white;"></a></div>-->
+        <!--        <div id="div-current_region">当前区域：<span id="current_region">杭州市</span></div>-->
+        <!--        <img id="logo" src="img/logo.png">-->
+        <!--        <div id="welcome">欢迎您：<!=session.getAttribute("me") > <a href="user/logout" class="fa fa-sign-out-alt" style="color: white;"></a></div>-->
     </div>
     <!-- 书签列表 -->
-<!--    <div id="sidebar_bookmark">-->
-<!--        <h2>书签列表</h2>-->
-<!--        <div id="jsGrid"></div>-->
-<!--    </div>-->
+    <!--    <div id="sidebar_bookmark">-->
+    <!--        <h2>书签列表</h2>-->
+    <!--        <div id="jsGrid"></div>-->
+    <!--    </div>-->
 
-<!--    <div id="sidebar_layer">-->
-<!--        <h2>图层</h2>-->
-<!--    </div>-->
+    <!--    <div id="sidebar_layer">-->
+    <!--        <h2>图层</h2>-->
+    <!--    </div>-->
 
     <!--  侧边栏面板  -->
     <div id="sidebar" class="leaflet-sidebar collapsed">
@@ -84,9 +85,9 @@
             <!-- top aligned tabs -->
             <ul role="tablist">
                 <li><a href="#home" role="tab"><i class="fas fa-bars"></i></a></li>
-<!--                <li><a href="#poi" role="tab"><i class="fas fa-map-marker-alt"></i></a></li>-->
+                <!--                <li><a href="#poi" role="tab"><i class="fas fa-map-marker-alt"></i></a></li>-->
                 <li><a href="#chart" role="tab"><i class="fas fa-chart-bar"></i></a></li>
-<!--                <li><a href="#search" role="tab"><i class="fas fa-search-location"></i></a></li>-->
+                <!--                <li><a href="#search" role="tab"><i class="fas fa-search-location"></i></a></li>-->
                 <li><a href="#fuzzy-search" role="tab"><i class="fas fa-search"></i></a></li>
             </ul>
         </div>
@@ -104,11 +105,11 @@
                 </div>
                 <div>
                     <p class="sidebar-header2">业务图层</p>
-<!--                    <div><input type="checkbox" id="dem" class="operation-overlay"><label>DEM数据</label></div>-->
+                    <!--                    <div><input type="checkbox" id="dem" class="operation-overlay"><label>DEM数据</label></div>-->
                     <div><input type="checkbox" id="landuse" class="operation-overlay"><label>土地利用数据</label></div>
                     <div><input type="checkbox" id="soil" class="operation-overlay"><label>土壤数据</label></div>
                     <div><input type="checkbox" id="water" class="operation-overlay"><label>河湖水系分布</label></div>
-<!--                    <div><input type="checkbox" id="flood" class="operation-overlay"><label>内涝分布</label></div>-->
+                    <!--                    <div><input type="checkbox" id="flood" class="operation-overlay"><label>内涝分布</label></div>-->
                     <div><input type="checkbox" id="pop" class="operation-overlay"><label>人口密度</label></div>
                 </div>
             </div>
@@ -120,7 +121,7 @@
                 </h1>
                 <div>
                     <p class="sidebar-header2">灾害风险图</p>
-<!--                    <label>日期</label>-->
+                    <!--                    <label>日期</label>-->
                     <div id="sandbox-container">
                         <div class="input-group date">
                             <input type="text" class="form-control" id="risk-date" placeholder="日期"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
@@ -153,21 +154,25 @@
     </div>
 
     <!-- 地图 -->
-    <div class="canvi-content middle" id="map"></div>
+    <div class="canvi-content middle" id="map">
+        <div id="loading-container">
+            <div class="loader"></div>
+        </div>
+    </div>
 
     <div class="controls-bar-right">
-<!--        <button type="button" id="btn-view-encyclopedia" class="btn btn-default btn-tools" style="width: 32px;height: 32px;padding:0px;">-->
-<!--            <span class="fas fa-book"></span>-->
-<!--        </button>-->
-<!--        <div class="btn-group-vertical" role="group" aria-label="书签" >-->
+        <!--        <button type="button" id="btn-view-encyclopedia" class="btn btn-default btn-tools" style="width: 32px;height: 32px;padding:0px;">-->
+        <!--            <span class="fas fa-book"></span>-->
+        <!--        </button>-->
+        <!--        <div class="btn-group-vertical" role="group" aria-label="书签" >-->
 
-<!--            <button type="button" id="btn-view-bookmark" class="btn btn-default btn-xs btn-tools btn-tools-top">-->
-<!--                <span class="fas fa-bookmark"></span><br>书签-->
-<!--            </button>-->
-<!--            <button type="button" id="btn-add-bookmark" class="btn btn-default btn-xs btn-tools btn-tools-bottom">-->
-<!--                <span class="fas fa-plus"></span><br>添加-->
-<!--            </button>-->
-<!--        </div>-->
+        <!--            <button type="button" id="btn-view-bookmark" class="btn btn-default btn-xs btn-tools btn-tools-top">-->
+        <!--                <span class="fas fa-bookmark"></span><br>书签-->
+        <!--            </button>-->
+        <!--            <button type="button" id="btn-add-bookmark" class="btn btn-default btn-xs btn-tools btn-tools-bottom">-->
+        <!--                <span class="fas fa-plus"></span><br>添加-->
+        <!--            </button>-->
+        <!--        </div>-->
     </div>
     <div class="timeline">
         <div class="control-button">
@@ -440,9 +445,9 @@
 
                 </div>
             </div>
-            <!--<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>-->
+            <!--            <div class="modal-footer">-->
+            <!--                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+            <!--            </div>-->
         </div>
     </div>
 </div>

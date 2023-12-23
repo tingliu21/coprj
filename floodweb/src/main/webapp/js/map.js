@@ -34,6 +34,7 @@ $(document).ready(function () {
 
     /* 底图切换 */
     $("input[name='basemap']").click(function(e) {
+		startLoading();
 		switch (e.target.id) {
 			case 'image-map':
 				map.addLayer(baseLayers.satellite);
@@ -51,16 +52,21 @@ $(document).ready(function () {
 				map.removeLayer(baseLayers.normal);
 				break;
 		}
+		 stopLoading();
 	});
 
     /* 业务图层切换 */
     $(".operation-overlay").click(function (e) {
+		startLoading();
 		toggleOperationOverlay(e.target.id);
+		stopLoading();
 	});
 
     /* 降雨聚合图层切换 */
 	$("#cb-precip").click(function (e) {
+		startLoading();
 		togglePrecipOverlay(e.target);
+		stopLoading();
 	});
 
 
@@ -77,6 +83,7 @@ $(document).ready(function () {
 	});
 	/* 手机号风险查询 */
 	$('#btn-fuzzy-search').click(function() {
+		startLoading();
 		$.get(WEB_PATH + "/log/add?source=web&op=查询",function(){});
 		var searchText = $('#fuzzy-search-text').val();
 		if (isLonLat(searchText)) {
@@ -124,6 +131,7 @@ $(document).ready(function () {
                 }
             });*/
 		}
+		stopLoading();
 	});
     /*
      * sidebar设置
@@ -178,8 +186,21 @@ $(document).ready(function () {
 		autoclose: true,
 		todayBtn: "linked",
 	});
-
-
+	// loading加载动画
+	var loadingInterval;
+	var loadingContainer = document.getElementById('loading-container');
+	window.startLoading = function() {
+		loadingContainer.style.display = 'flex';
+		loadingInterval = setInterval(function() {
+			// 在每个时间间隔内执行需要的操作
+		}, 200); // 较小的时间间隔，例如200毫秒
+	}
+	window.stopLoading = function() {
+		clearInterval(loadingInterval);
+		setTimeout(function() {
+			loadingContainer.style.display = 'none';
+		}, 250); // 至少等待0.25秒后隐藏加载动画
+	}
 
 	// 查询灾害风险图
 	$('#btn-risk-search').click(function () {
@@ -203,10 +224,8 @@ $(document).ready(function () {
 			timeList = setTimeList(d) //得到连续7天的日期
 			timeAxioParam.data = timeList //设置时间轴
 			oTimeAxiosFun = new oTimeAxios(timeAxioParam, function () { changeDataTimeAxios(this) });
-
 			// $('#btnPlay').show();
 		}
-
 	})
 	//重置查询灾害风险图
 	$('#btn-risk-reset').click(function () {
@@ -253,21 +272,20 @@ $(document).ready(function () {
  * @param e
  */
 function changeDataTimeAxios(e) {
+	startLoading();
 	let d = new Date($('#risk-date').val().split("-")[0] + "-" + timeList[e.options.index].time)
 	//先删除上一个日期的风险图
 	if (LAYER_RISK != undefined && map.hasLayer(LAYER_RISK)) {
 		map.removeLayer(LAYER_RISK)
 	}
 	//重新加载新日期的风险图
-	LAYER_RISK = L.tileLayer.wms(GEOSERVER_PATH, {
-					layers: "inun_"+formatDate2(d),
-					 format: 'image/png',
-					transparent: true,
-					KeepBuffer:10,
-					tileSize:2048,
-					zIndex:999
-				});
+	LAYER_RISK = L.tileLayer(GEOSERVER_PATH2+formatDate2(d)+'@EPSG%3A900913@png/{z}/{x}/{y}.png',{
+			tms: true
+		});
+
 	map.addLayer(LAYER_RISK)
+	stopLoading();
+
 }
 function getPrecipitation(date){
 	/* 以聚合方式加载所有降雨点 */
@@ -316,7 +334,6 @@ function getPrecipitation(date){
 					}).bindPopup("<p>日降雨量：" + precip.toFixed(2) + "毫米</p>"));
 				}
 			}
-
 
 		}
 		layergroup_rain1.addTo(map);
@@ -456,9 +473,8 @@ function togglePrecipOverlay(checkbox) {
 	}
 }
 
-
 /**
- * 灾害事件
+ * 灾害事件,暂无
  * @param checkbox
  */
 function toggleWtsOverlay(checkbox) {
@@ -470,7 +486,7 @@ function toggleWtsOverlay(checkbox) {
 }
 
 /**
- * 显示人口分布对话框
+ * 显示人口分布对话框,暂无
  * @param id
  */
 function showEntInfo(id) {
@@ -490,7 +506,7 @@ function showEntInfo(id) {
 
 
 /**
- * 显示灾害事件详情对话框
+ * 显示灾害事件详情对话框,暂无
  * @param id
  */
 function showWtsInfo(id) {
