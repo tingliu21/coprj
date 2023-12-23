@@ -164,6 +164,16 @@ $(document).ready(function () {
 	var isPlay = false; //标识是否正在播放
 	var interv; //interval
 	$('#btnPlay').click(function () {
+		//风险播放时，不再显示降雨信息
+		if (layergroup_rain1 != undefined && map.hasLayer(layergroup_rain1)) {
+			map.removeLayer(layergroup_rain1)
+		}
+		if (layergroup_rain3 != undefined && map.hasLayer(layergroup_rain3)) {
+			map.removeLayer(layergroup_rain3)
+		}
+		if (layergroup_rain5 != undefined && map.hasLayer(layergroup_rain5)) {
+			map.removeLayer(layergroup_rain5)
+		}
 		if (isPlay) {
 			window.clearInterval(interv);
 			$('#btnPlay').text('▶')

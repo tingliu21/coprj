@@ -89,8 +89,9 @@
     height: 16px;
     top: 49%;
     /*left: -2px;*/
-    background: yellow;
+    background: red;
 }
 .cx-time-active > div{
-    color: yellow;
+    color: red;
+    font-size: 18px;
 }

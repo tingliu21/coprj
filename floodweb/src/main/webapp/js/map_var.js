@@ -1,7 +1,7 @@
 var WEB_PATH = "/floodweb";
 // var GEOSERVER_PATH="http://localhost:8088/geoserver/sde/wms";
 var GEOSERVER_PATH="https://ilab.fudan.edu.cn/geoserver/sde/wms";
-var GEOSERVER_PATH2="http://ilab.fudan.edu.cn/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_"; // https://ilab.fudan.edu.cn/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_
+var GEOSERVER_PATH2="https://ilab.fudan.edu.cn/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_"; // https://ilab.fudan.edu.cn/geoserver/gwc/service/tms/1.0.0/sde%3Ainun_
 var LAYER_TDT_NORMAL;
 var LAYER_TDT_NORMAL_ANNO;
 var LAYER_TDT_SATELLITE;
